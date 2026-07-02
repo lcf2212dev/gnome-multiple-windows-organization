@@ -1,0 +1,45 @@
+/* Zonas da grade mostradas durante o arrasto (segurar Ctrl) */
+.mwo-zone {
+    background-color: rgba(53, 132, 228, 0.14);
+    border: 1px solid rgba(53, 132, 228, 0.55);
+    border-radius: 8px;
+}
+
+.mwo-zone-active {
+    background-color: rgba(53, 132, 228, 0.38);
+    border: 2px solid rgba(98, 160, 234, 0.95);
+}
+
+/* Popup de grade (Super+G) */
+.mwo-popup-backdrop {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.mwo-popup-frame {
+    background-color: rgba(34, 34, 38, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.mwo-popup-title {
+    color: #ffffff;
+    font-size: 10.5pt;
+    padding-bottom: 10px;
+}
+
+.mwo-popup-cell {
+    background-color: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    margin: 3px;
+}
+
+.mwo-popup-cell:hover {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+.mwo-popup-cell-selected {
+    background-color: rgba(53, 132, 228, 0.80);
+    border: 1px solid #62a0ea;
+}
