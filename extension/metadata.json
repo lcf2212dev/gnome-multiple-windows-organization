@@ -1,0 +1,9 @@
+{
+  "uuid": "multiple-windows-organization@lcf2212dev",
+  "name": "Multiple Windows Organization",
+  "description": "Grade de tiling configurável (linhas × colunas) por monitor: atalhos de teclado, zonas ao arrastar e popup de grade.",
+  "shell-version": ["50"],
+  "settings-schema": "org.gnome.shell.extensions.multiple-windows-organization",
+  "gettext-domain": "multiple-windows-organization",
+  "url": "https://github.com/lcf2212dev/multiple-windows-organization"
+}

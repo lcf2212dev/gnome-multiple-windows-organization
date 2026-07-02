@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="multiple-windows-organization">
+  <schema id="org.gnome.shell.extensions.multiple-windows-organization"
+          path="/org/gnome/shell/extensions/multiple-windows-organization/">
+
+    <key name="monitor-grids" type="s">
+      <default>'{}'</default>
+      <summary>Grade por monitor</summary>
+      <description>JSON chaveado por conector, ex.: {"DP-1":{"rows":1,"cols":3}}</description>
+    </key>
+
+    <key name="default-rows" type="i">
+      <range min="1" max="8"/>
+      <default>1</default>
+      <summary>Linhas padrão para monitores sem configuração</summary>
+    </key>
+
+    <key name="default-cols" type="i">
+      <range min="1" max="8"/>
+      <default>2</default>
+      <summary>Colunas padrão para monitores sem configuração</summary>
+    </key>
+
+    <key name="gap" type="i">
+      <range min="0" max="64"/>
+      <default>0</default>
+      <summary>Espaço entre células e nas bordas, em pixels lógicos</summary>
+    </key>
+
+    <key name="enable-drag-zones" type="b">
+      <default>true</default>
+      <summary>Encaixar janelas na grade ao arrastar</summary>
+    </key>
+
+    <key name="edge-threshold" type="i">
+      <range min="8" max="256"/>
+      <default>48</default>
+      <summary>Espessura da zona de borda durante o arrasto, em pixels</summary>
+    </key>
+
+    <key name="did-disable-edge-tiling" type="b">
+      <default>false</default>
+      <summary>Sentinela interna: a extensão desligou o edge-tiling nativo</summary>
+      <description>Usada para restaurar org.gnome.mutter edge-tiling com segurança mesmo após um crash.</description>
+    </key>
+
+    <key name="move-up" type="as">
+      <default>['&lt;Super&gt;Up']</default>
+      <summary>Mover a janela uma célula acima (no topo: maximizar)</summary>
+    </key>
+
+    <key name="move-left" type="as">
+      <default>[]</default>
+      <summary>Mover a janela uma célula à esquerda (opcional; o padrão vem do Super+Left nativo)</summary>
+    </key>
+
+    <key name="move-right" type="as">
+      <default>[]</default>
+      <summary>Mover a janela uma célula à direita (opcional; o padrão vem do Super+Right nativo)</summary>
+    </key>
+
+    <key name="move-down" type="as">
+      <default>[]</default>
+      <summary>Mover a janela uma célula abaixo (opcional; o padrão vem do Super+Down nativo)</summary>
+    </key>
+
+    <key name="span-left" type="as">
+      <default>['&lt;Super&gt;&lt;Control&gt;Left']</default>
+      <summary>Expandir a janela uma célula à esquerda (na borda: encolher pela direita)</summary>
+    </key>
+
+    <key name="span-right" type="as">
+      <default>['&lt;Super&gt;&lt;Control&gt;Right']</default>
+      <summary>Expandir a janela uma célula à direita (na borda: encolher pela esquerda)</summary>
+    </key>
+
+    <key name="span-up" type="as">
+      <default>['&lt;Super&gt;&lt;Control&gt;Up']</default>
+      <summary>Expandir a janela uma célula acima (na borda: encolher por baixo)</summary>
+    </key>
+
+    <key name="span-down" type="as">
+      <default>['&lt;Super&gt;&lt;Control&gt;Down']</default>
+      <summary>Expandir a janela uma célula abaixo (na borda: encolher por cima)</summary>
+    </key>
+
+    <key name="show-popup" type="as">
+      <default>['&lt;Super&gt;g']</default>
+      <summary>Abrir o popup de grade</summary>
+    </key>
+
+  </schema>
+</schemalist>

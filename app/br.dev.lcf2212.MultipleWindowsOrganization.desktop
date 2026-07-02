@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Multiple Windows Organization
+Name[pt_BR]=Organização de Janelas
+Comment=Configure the tiling grid (rows × columns) of each monitor
+Comment[pt_BR]=Configure a grade de janelas (linhas × colunas) de cada monitor
+Exec=gnome-extensions prefs multiple-windows-organization@lcf2212dev
+Icon=__ICON_PATH__
+Terminal=false
+Categories=Utility;
+Keywords=tiling;grid;windows;monitor;grade;janelas;
+StartupNotify=false
