@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: multiple-windows-organization\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-07 00:00+0000\n"
+"PO-Revision-Date: 2026-07-07 00:00+0000\n"
+"Last-Translator: Hermes Agent <noreply@nousresearch.com>\n"
+"Language-Team: zh_CN\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Multiple Windows Organization"
+msgstr "多窗口组织"
+
+msgid "Configurable tiling grid (rows × columns) per monitor: keyboard shortcuts, drag zones, and a grid popup."
+msgstr "按显示器配置的平铺网格（行 × 列）：键盘快捷键、拖拽区域和网格弹窗。"
+
+msgid "Monitors"
+msgstr "显示器"
+
+msgid "Grid per monitor"
+msgstr "每台显示器的网格"
+
+msgid "Rows × columns for each connected display. The setting is saved by connector (DP-1, HDMI-1, ...): if a monitor changes ports, configure it again."
+msgstr "为每个已连接的显示器设置行 × 列。设置按接口保存（DP-1、HDMI-1 等）：如果显示器更换接口，请重新配置。"
+
+msgid "Columns"
+msgstr "列"
+
+msgid "Rows"
+msgstr "行"
+
+msgid "Orphaned settings"
+msgstr "孤立设置"
+
+msgid "Connectors with a saved grid but no currently connected monitor"
+msgstr "已保存网格但当前没有连接显示器的接口"
+
+msgid "disconnected — %s×%s"
+msgstr "已断开 — %s×%s"
+
+msgid "Remove setting"
+msgstr "移除设置"
+
+msgid "General"
+msgstr "常规"
+
+msgid "Default grid"
+msgstr "默认网格"
+
+msgid "Used by monitors without their own setting (1×2 mimics native GNOME tiling)"
+msgstr "用于没有单独设置的显示器（1×2 模拟 GNOME 原生平铺）"
+
+msgid "Behavior"
+msgstr "行为"
+
+msgid "Gap between windows (px)"
+msgstr "窗口间距（像素）"
+
+msgid "Snap while dragging"
+msgstr "拖拽时吸附"
+
+msgid "Screen edges become grid zones (top maximizes); hold Ctrl while dragging to show the full grid"
+msgstr "屏幕边缘会变成网格区域（顶部为最大化）；拖拽时按住 Ctrl 可显示完整网格"
+
+msgid "Edge zone thickness (px)"
+msgstr "边缘区域厚度（像素）"
+
+msgid "Shortcuts"
+msgstr "快捷键"
+
+msgid "disabled"
+msgstr "已禁用"
+
+msgid "Move in grid"
+msgstr "在网格中移动"
+
+msgid "Native tiling shortcuts are handled by the grid while the extension is active (and restored when disabled)"
+msgstr "扩展启用时，原生平铺快捷键由网格处理（禁用后恢复）"
+
+msgid "Move left"
+msgstr "向左移动"
+
+msgid "Move right"
+msgstr "向右移动"
+
+msgid "Move up / maximize"
+msgstr "向上移动 / 最大化"
+
+msgid "Move down / restore"
+msgstr "向下移动 / 恢复"
+
+msgid "Expand"
+msgstr "扩展"
+
+msgid "Grows one cell in the chosen direction; at the edge, shrinks from the opposite side"
+msgstr "向所选方向扩展一个单元；到达边缘时从相反一侧收缩"
+
+msgid "Expand left"
+msgstr "向左扩展"
+
+msgid "Expand right"
+msgstr "向右扩展"
+
+msgid "Expand up"
+msgstr "向上扩展"
+
+msgid "Expand down"
+msgstr "向下扩展"
+
+msgid "Grid popup"
+msgstr "网格弹窗"
+
+msgid "Open popup"
+msgstr "打开弹窗"
+
+msgid "Customize shortcuts"
+msgstr "自定义快捷键"
+
+msgid "Edit keys under /org/gnome/shell/extensions/multiple-windows-organization/ with dconf-editor"
+msgstr "使用 dconf-editor 编辑 /org/gnome/shell/extensions/multiple-windows-organization/ 下的按键"
+
+msgid "Grid %d×%d — arrow keys move, Shift expands, Enter applies"
+msgstr "网格 %d×%d — 方向键移动，Shift 扩展，Enter 应用"
+
+msgid "JSON keyed by connector, e.g. {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+msgstr "按接口键控的 JSON，例如 {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+
+msgid "Default rows for monitors without a custom setting"
+msgstr "没有自定义设置的显示器的默认行数"
+
+msgid "Default columns for monitors without a custom setting"
+msgstr "没有自定义设置的显示器的默认列数"
+
+msgid "Space between cells and around edges, in logical pixels"
+msgstr "单元格之间及边缘周围的间距，以逻辑像素为单位"
+
+msgid "Snap windows to the grid while dragging"
+msgstr "拖拽时将窗口吸附到网格"
+
+msgid "Edge zone thickness while dragging, in pixels"
+msgstr "拖拽时边缘区域的厚度（像素）"
+
+msgid "Internal sentinel: the extension disabled native edge tiling"
+msgstr "内部标记：扩展已禁用原生边缘平铺"
+
+msgid "Used to safely restore org.gnome.mutter edge-tiling even after a crash."
+msgstr "用于在崩溃后安全恢复 org.gnome.mutter edge-tiling。"
+
+msgid "Move the window one cell up (at the top: maximize)"
+msgstr "将窗口向上移动一个单元（到顶部时最大化）"
+
+msgid "Move the window one cell left (optional; the default comes from native Super+Left)"
+msgstr "将窗口向左移动一个单元（可选；默认来自原生 Super+Left）"
+
+msgid "Move the window one cell right (optional; the default comes from native Super+Right)"
+msgstr "将窗口向右移动一个单元（可选；默认来自原生 Super+Right）"
+
+msgid "Move the window one cell down (optional; the default comes from native Super+Down)"
+msgstr "将窗口向下移动一个单元（可选；默认来自原生 Super+Down）"
+
+msgid "Expand the window one cell left (at the edge: shrink from the right)"
+msgstr "将窗口向左扩展一个单元（到边缘时从右侧收缩）"
+
+msgid "Expand the window one cell right (at the edge: shrink from the left)"
+msgstr "将窗口向右扩展一个单元（到边缘时从左侧收缩）"
+
+msgid "Expand the window one cell up (at the edge: shrink from the bottom)"
+msgstr "将窗口向上扩展一个单元（到边缘时从底部收缩）"
+
+msgid "Expand the window one cell down (at the edge: shrink from the top)"
+msgstr "将窗口向下扩展一个单元（到边缘时从顶部收缩）"
+
+msgid "Open the grid popup"
+msgstr "打开网格弹窗"
+
+msgid "Interface"
+msgstr "界面"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Automatic (system language)"
+msgstr "自动（系统语言）"
+
+msgid "Choose the language used by this app. “Automatic” follows the GNOME/system language."
+msgstr "选择此应用使用的语言。“自动”会跟随 GNOME/系统语言。"
+
+msgid "Applies immediately to this preferences window. The Shell popup follows the chosen language the next time it opens."
+msgstr "会立即应用到此首选项窗口。Shell 弹窗会在下次打开时使用所选语言。"
+
+msgid "Interface language"
+msgstr "界面语言"
+
+msgid "Language used by the preferences window and extension UI. Use “system” to follow the GNOME/system language."
+msgstr "首选项窗口和扩展界面使用的语言。使用“system”跟随 GNOME/系统语言。"
+

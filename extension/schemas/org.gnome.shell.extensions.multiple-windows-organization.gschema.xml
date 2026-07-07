@@ -5,88 +5,94 @@
 
     <key name="monitor-grids" type="s">
       <default>'{}'</default>
-      <summary>Grade por monitor</summary>
-      <description>JSON chaveado por conector, ex.: {"DP-1":{"rows":1,"cols":3}}</description>
+      <summary>Grid per monitor</summary>
+      <description>JSON keyed by connector, e.g. {"DP-1":{"rows":1,"cols":3}}</description>
     </key>
 
     <key name="default-rows" type="i">
       <range min="1" max="8"/>
       <default>1</default>
-      <summary>Linhas padrão para monitores sem configuração</summary>
+      <summary>Default rows for monitors without a custom setting</summary>
     </key>
 
     <key name="default-cols" type="i">
       <range min="1" max="8"/>
       <default>2</default>
-      <summary>Colunas padrão para monitores sem configuração</summary>
+      <summary>Default columns for monitors without a custom setting</summary>
     </key>
 
     <key name="gap" type="i">
       <range min="0" max="64"/>
       <default>0</default>
-      <summary>Espaço entre células e nas bordas, em pixels lógicos</summary>
+      <summary>Space between cells and around edges, in logical pixels</summary>
+    </key>
+
+    <key name="ui-language" type="s">
+      <default>'system'</default>
+      <summary>Interface language</summary>
+      <description>Language used by the preferences window and extension UI. Use “system” to follow the GNOME/system language.</description>
     </key>
 
     <key name="enable-drag-zones" type="b">
       <default>true</default>
-      <summary>Encaixar janelas na grade ao arrastar</summary>
+      <summary>Snap windows to the grid while dragging</summary>
     </key>
 
     <key name="edge-threshold" type="i">
       <range min="8" max="256"/>
       <default>48</default>
-      <summary>Espessura da zona de borda durante o arrasto, em pixels</summary>
+      <summary>Edge zone thickness while dragging, in pixels</summary>
     </key>
 
     <key name="did-disable-edge-tiling" type="b">
       <default>false</default>
-      <summary>Sentinela interna: a extensão desligou o edge-tiling nativo</summary>
-      <description>Usada para restaurar org.gnome.mutter edge-tiling com segurança mesmo após um crash.</description>
+      <summary>Internal sentinel: the extension disabled native edge tiling</summary>
+      <description>Used to safely restore org.gnome.mutter edge-tiling even after a crash.</description>
     </key>
 
     <key name="move-up" type="as">
       <default>['&lt;Super&gt;Up']</default>
-      <summary>Mover a janela uma célula acima (no topo: maximizar)</summary>
+      <summary>Move the window one cell up (at the top: maximize)</summary>
     </key>
 
     <key name="move-left" type="as">
       <default>[]</default>
-      <summary>Mover a janela uma célula à esquerda (opcional; o padrão vem do Super+Left nativo)</summary>
+      <summary>Move the window one cell left (optional; the default comes from native Super+Left)</summary>
     </key>
 
     <key name="move-right" type="as">
       <default>[]</default>
-      <summary>Mover a janela uma célula à direita (opcional; o padrão vem do Super+Right nativo)</summary>
+      <summary>Move the window one cell right (optional; the default comes from native Super+Right)</summary>
     </key>
 
     <key name="move-down" type="as">
       <default>[]</default>
-      <summary>Mover a janela uma célula abaixo (opcional; o padrão vem do Super+Down nativo)</summary>
+      <summary>Move the window one cell down (optional; the default comes from native Super+Down)</summary>
     </key>
 
     <key name="span-left" type="as">
       <default>['&lt;Super&gt;&lt;Control&gt;Left']</default>
-      <summary>Expandir a janela uma célula à esquerda (na borda: encolher pela direita)</summary>
+      <summary>Expand the window one cell left (at the edge: shrink from the right)</summary>
     </key>
 
     <key name="span-right" type="as">
       <default>['&lt;Super&gt;&lt;Control&gt;Right']</default>
-      <summary>Expandir a janela uma célula à direita (na borda: encolher pela esquerda)</summary>
+      <summary>Expand the window one cell right (at the edge: shrink from the left)</summary>
     </key>
 
     <key name="span-up" type="as">
       <default>['&lt;Super&gt;&lt;Control&gt;Up']</default>
-      <summary>Expandir a janela uma célula acima (na borda: encolher por baixo)</summary>
+      <summary>Expand the window one cell up (at the edge: shrink from the bottom)</summary>
     </key>
 
     <key name="span-down" type="as">
       <default>['&lt;Super&gt;&lt;Control&gt;Down']</default>
-      <summary>Expandir a janela uma célula abaixo (na borda: encolher por cima)</summary>
+      <summary>Expand the window one cell down (at the edge: shrink from the top)</summary>
     </key>
 
     <key name="show-popup" type="as">
       <default>['&lt;Super&gt;g']</default>
-      <summary>Abrir o popup de grade</summary>
+      <summary>Open the grid popup</summary>
     </key>
 
   </schema>

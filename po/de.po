@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: multiple-windows-organization\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-07 00:00+0000\n"
+"PO-Revision-Date: 2026-07-07 00:00+0000\n"
+"Last-Translator: Hermes Agent <noreply@nousresearch.com>\n"
+"Language-Team: de\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Multiple Windows Organization"
+msgstr "Fensterorganisation"
+
+msgid "Configurable tiling grid (rows × columns) per monitor: keyboard shortcuts, drag zones, and a grid popup."
+msgstr "Konfigurierbares Kachelraster (Zeilen × Spalten) pro Monitor: Tastenkürzel, Ziehzonen und Raster-Popup."
+
+msgid "Monitors"
+msgstr "Monitore"
+
+msgid "Grid per monitor"
+msgstr "Raster pro Monitor"
+
+msgid "Rows × columns for each connected display. The setting is saved by connector (DP-1, HDMI-1, ...): if a monitor changes ports, configure it again."
+msgstr "Zeilen × Spalten für jede verbundene Anzeige. Die Einstellung wird pro Anschluss gespeichert (DP-1, HDMI-1, ...): Wenn ein Monitor den Anschluss wechselt, konfigurieren Sie ihn erneut."
+
+msgid "Columns"
+msgstr "Spalten"
+
+msgid "Rows"
+msgstr "Zeilen"
+
+msgid "Orphaned settings"
+msgstr "Verwaiste Einstellungen"
+
+msgid "Connectors with a saved grid but no currently connected monitor"
+msgstr "Anschlüsse mit gespeichertem Raster, aber ohne aktuell verbundenen Monitor"
+
+msgid "disconnected — %s×%s"
+msgstr "getrennt — %s×%s"
+
+msgid "Remove setting"
+msgstr "Einstellung entfernen"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Default grid"
+msgstr "Standardraster"
+
+msgid "Used by monitors without their own setting (1×2 mimics native GNOME tiling)"
+msgstr "Wird für Monitore ohne eigene Einstellung verwendet (1×2 imitiert das native GNOME-Kacheln)"
+
+msgid "Behavior"
+msgstr "Verhalten"
+
+msgid "Gap between windows (px)"
+msgstr "Abstand zwischen Fenstern (px)"
+
+msgid "Snap while dragging"
+msgstr "Beim Ziehen einrasten"
+
+msgid "Screen edges become grid zones (top maximizes); hold Ctrl while dragging to show the full grid"
+msgstr "Bildschirmränder werden zu Rasterzonen (oben maximiert); halten Sie beim Ziehen Strg gedrückt, um das ganze Raster zu zeigen"
+
+msgid "Edge zone thickness (px)"
+msgstr "Dicke der Randzone (px)"
+
+msgid "Shortcuts"
+msgstr "Tastenkürzel"
+
+msgid "disabled"
+msgstr "deaktiviert"
+
+msgid "Move in grid"
+msgstr "Im Raster verschieben"
+
+msgid "Native tiling shortcuts are handled by the grid while the extension is active (and restored when disabled)"
+msgstr "Native Kachel-Tastenkürzel werden vom Raster behandelt, solange die Erweiterung aktiv ist (und beim Deaktivieren wiederhergestellt)"
+
+msgid "Move left"
+msgstr "Nach links verschieben"
+
+msgid "Move right"
+msgstr "Nach rechts verschieben"
+
+msgid "Move up / maximize"
+msgstr "Nach oben / maximieren"
+
+msgid "Move down / restore"
+msgstr "Nach unten / wiederherstellen"
+
+msgid "Expand"
+msgstr "Erweitern"
+
+msgid "Grows one cell in the chosen direction; at the edge, shrinks from the opposite side"
+msgstr "Wächst um eine Zelle in die gewählte Richtung; am Rand schrumpft es von der gegenüberliegenden Seite"
+
+msgid "Expand left"
+msgstr "Nach links erweitern"
+
+msgid "Expand right"
+msgstr "Nach rechts erweitern"
+
+msgid "Expand up"
+msgstr "Nach oben erweitern"
+
+msgid "Expand down"
+msgstr "Nach unten erweitern"
+
+msgid "Grid popup"
+msgstr "Raster-Popup"
+
+msgid "Open popup"
+msgstr "Popup öffnen"
+
+msgid "Customize shortcuts"
+msgstr "Tastenkürzel anpassen"
+
+msgid "Edit keys under /org/gnome/shell/extensions/multiple-windows-organization/ with dconf-editor"
+msgstr "Bearbeiten Sie die Schlüssel unter /org/gnome/shell/extensions/multiple-windows-organization/ mit dconf-editor"
+
+msgid "Grid %d×%d — arrow keys move, Shift expands, Enter applies"
+msgstr "Raster %d×%d — Pfeiltasten verschieben, Umschalt erweitert, Eingabe übernimmt"
+
+msgid "JSON keyed by connector, e.g. {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+msgstr "JSON nach Anschluss, z. B. {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+
+msgid "Default rows for monitors without a custom setting"
+msgstr "Standardzeilen für Monitore ohne eigene Einstellung"
+
+msgid "Default columns for monitors without a custom setting"
+msgstr "Standardspalten für Monitore ohne eigene Einstellung"
+
+msgid "Space between cells and around edges, in logical pixels"
+msgstr "Abstand zwischen Zellen und an den Rändern, in logischen Pixeln"
+
+msgid "Snap windows to the grid while dragging"
+msgstr "Fenster beim Ziehen am Raster einrasten"
+
+msgid "Edge zone thickness while dragging, in pixels"
+msgstr "Dicke der Randzone beim Ziehen, in Pixeln"
+
+msgid "Internal sentinel: the extension disabled native edge tiling"
+msgstr "Interner Marker: Die Erweiterung hat natives Rand-Kacheln deaktiviert"
+
+msgid "Used to safely restore org.gnome.mutter edge-tiling even after a crash."
+msgstr "Wird verwendet, um org.gnome.mutter edge-tiling auch nach einem Absturz sicher wiederherzustellen."
+
+msgid "Move the window one cell up (at the top: maximize)"
+msgstr "Fenster eine Zelle nach oben verschieben (oben: maximieren)"
+
+msgid "Move the window one cell left (optional; the default comes from native Super+Left)"
+msgstr "Fenster eine Zelle nach links verschieben (optional; Standard kommt von nativem Super+Links)"
+
+msgid "Move the window one cell right (optional; the default comes from native Super+Right)"
+msgstr "Fenster eine Zelle nach rechts verschieben (optional; Standard kommt von nativem Super+Rechts)"
+
+msgid "Move the window one cell down (optional; the default comes from native Super+Down)"
+msgstr "Fenster eine Zelle nach unten verschieben (optional; Standard kommt von nativem Super+Runter)"
+
+msgid "Expand the window one cell left (at the edge: shrink from the right)"
+msgstr "Fenster eine Zelle nach links erweitern (am Rand: von rechts schrumpfen)"
+
+msgid "Expand the window one cell right (at the edge: shrink from the left)"
+msgstr "Fenster eine Zelle nach rechts erweitern (am Rand: von links schrumpfen)"
+
+msgid "Expand the window one cell up (at the edge: shrink from the bottom)"
+msgstr "Fenster eine Zelle nach oben erweitern (am Rand: von unten schrumpfen)"
+
+msgid "Expand the window one cell down (at the edge: shrink from the top)"
+msgstr "Fenster eine Zelle nach unten erweitern (am Rand: von oben schrumpfen)"
+
+msgid "Open the grid popup"
+msgstr "Raster-Popup öffnen"
+
+msgid "Interface"
+msgstr "Oberfläche"
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "Automatic (system language)"
+msgstr "Automatisch (Systemsprache)"
+
+msgid "Choose the language used by this app. “Automatic” follows the GNOME/system language."
+msgstr "Wählen Sie die Sprache dieser App. „Automatisch“ folgt der GNOME-/Systemsprache."
+
+msgid "Applies immediately to this preferences window. The Shell popup follows the chosen language the next time it opens."
+msgstr "Wird sofort auf dieses Einstellungsfenster angewendet. Das Shell-Popup verwendet die gewählte Sprache beim nächsten Öffnen."
+
+msgid "Interface language"
+msgstr "Sprache der Oberfläche"
+
+msgid "Language used by the preferences window and extension UI. Use “system” to follow the GNOME/system language."
+msgstr "Sprache des Einstellungsfensters und der Erweiterungsoberfläche. Verwenden Sie „system“, um der GNOME-/Systemsprache zu folgen."
+

@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: multiple-windows-organization\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-07 00:00+0000\n"
+"PO-Revision-Date: 2026-07-07 00:00+0000\n"
+"Last-Translator: Hermes Agent <noreply@nousresearch.com>\n"
+"Language-Team: pt\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Multiple Windows Organization"
+msgstr "Organização de Janelas"
+
+msgid "Configurable tiling grid (rows × columns) per monitor: keyboard shortcuts, drag zones, and a grid popup."
+msgstr "Grade de tiling configurável (linhas × colunas) por monitor: atalhos de teclado, zonas ao arrastar e popup de grade."
+
+msgid "Monitors"
+msgstr "Monitores"
+
+msgid "Grid per monitor"
+msgstr "Grade por monitor"
+
+msgid "Rows × columns for each connected display. The setting is saved by connector (DP-1, HDMI-1, ...): if a monitor changes ports, configure it again."
+msgstr "Linhas × colunas de cada tela conectada. A configuração é salva pelo conector (DP-1, HDMI-1, ...): se um monitor mudar de porta, configure de novo."
+
+msgid "Columns"
+msgstr "Colunas"
+
+msgid "Rows"
+msgstr "Linhas"
+
+msgid "Orphaned settings"
+msgstr "Configurações órfãs"
+
+msgid "Connectors with a saved grid but no currently connected monitor"
+msgstr "Conectores com grade salva mas sem monitor conectado no momento"
+
+msgid "disconnected — %s×%s"
+msgstr "desconectado — %s×%s"
+
+msgid "Remove setting"
+msgstr "Remover configuração"
+
+msgid "General"
+msgstr "Geral"
+
+msgid "Default grid"
+msgstr "Grade padrão"
+
+msgid "Used by monitors without their own setting (1×2 mimics native GNOME tiling)"
+msgstr "Usada por monitores sem configuração própria (1×2 imita o tiling nativo do GNOME)"
+
+msgid "Behavior"
+msgstr "Comportamento"
+
+msgid "Gap between windows (px)"
+msgstr "Espaço entre janelas (px)"
+
+msgid "Snap while dragging"
+msgstr "Encaixar ao arrastar"
+
+msgid "Screen edges become grid zones (top maximizes); hold Ctrl while dragging to show the full grid"
+msgstr "As bordas da tela viram zonas da grade (o topo maximiza); segure Ctrl durante o arrasto para ver a grade completa"
+
+msgid "Edge zone thickness (px)"
+msgstr "Espessura da zona de borda (px)"
+
+msgid "Shortcuts"
+msgstr "Atalhos"
+
+msgid "disabled"
+msgstr "desativado"
+
+msgid "Move in grid"
+msgstr "Mover na grade"
+
+msgid "Native tiling shortcuts are handled by the grid while the extension is active (and restored when disabled)"
+msgstr "Os atalhos nativos de tiling são assumidos pela grade enquanto a extensão está ativa (e restaurados ao desativá-la)"
+
+msgid "Move left"
+msgstr "Mover para a esquerda"
+
+msgid "Move right"
+msgstr "Mover para a direita"
+
+msgid "Move up / maximize"
+msgstr "Subir / maximizar"
+
+msgid "Move down / restore"
+msgstr "Descer / restaurar"
+
+msgid "Expand"
+msgstr "Expandir"
+
+msgid "Grows one cell in the chosen direction; at the edge, shrinks from the opposite side"
+msgstr "Cresce uma célula na direção escolhida; na borda, encolhe pelo lado oposto"
+
+msgid "Expand left"
+msgstr "Expandir para a esquerda"
+
+msgid "Expand right"
+msgstr "Expandir para a direita"
+
+msgid "Expand up"
+msgstr "Expandir para cima"
+
+msgid "Expand down"
+msgstr "Expandir para baixo"
+
+msgid "Grid popup"
+msgstr "Popup de grade"
+
+msgid "Open popup"
+msgstr "Abrir popup"
+
+msgid "Customize shortcuts"
+msgstr "Personalizar atalhos"
+
+msgid "Edit keys under /org/gnome/shell/extensions/multiple-windows-organization/ with dconf-editor"
+msgstr "Edite as chaves em /org/gnome/shell/extensions/multiple-windows-organization/ com o dconf-editor"
+
+msgid "Grid %d×%d — arrow keys move, Shift expands, Enter applies"
+msgstr "Grade %d×%d — setas movem, Shift expande, Enter aplica"
+
+msgid "JSON keyed by connector, e.g. {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+msgstr "JSON chaveado por conector, ex.: {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+
+msgid "Default rows for monitors without a custom setting"
+msgstr "Linhas padrão para monitores sem configuração própria"
+
+msgid "Default columns for monitors without a custom setting"
+msgstr "Colunas padrão para monitores sem configuração própria"
+
+msgid "Space between cells and around edges, in logical pixels"
+msgstr "Espaço entre células e nas bordas, em pixels lógicos"
+
+msgid "Snap windows to the grid while dragging"
+msgstr "Encaixar janelas na grade ao arrastar"
+
+msgid "Edge zone thickness while dragging, in pixels"
+msgstr "Espessura da zona de borda durante o arrasto, em pixels"
+
+msgid "Internal sentinel: the extension disabled native edge tiling"
+msgstr "Sentinela interna: a extensão desativou o edge tiling nativo"
+
+msgid "Used to safely restore org.gnome.mutter edge-tiling even after a crash."
+msgstr "Usada para restaurar org.gnome.mutter edge-tiling com segurança mesmo após um crash."
+
+msgid "Move the window one cell up (at the top: maximize)"
+msgstr "Mover a janela uma célula acima (no topo: maximizar)"
+
+msgid "Move the window one cell left (optional; the default comes from native Super+Left)"
+msgstr "Mover a janela uma célula à esquerda (opcional; o padrão vem do Super+Left nativo)"
+
+msgid "Move the window one cell right (optional; the default comes from native Super+Right)"
+msgstr "Mover a janela uma célula à direita (opcional; o padrão vem do Super+Right nativo)"
+
+msgid "Move the window one cell down (optional; the default comes from native Super+Down)"
+msgstr "Mover a janela uma célula abaixo (opcional; o padrão vem do Super+Down nativo)"
+
+msgid "Expand the window one cell left (at the edge: shrink from the right)"
+msgstr "Expandir a janela uma célula à esquerda (na borda: encolher pela direita)"
+
+msgid "Expand the window one cell right (at the edge: shrink from the left)"
+msgstr "Expandir a janela uma célula à direita (na borda: encolher pela esquerda)"
+
+msgid "Expand the window one cell up (at the edge: shrink from the bottom)"
+msgstr "Expandir a janela uma célula acima (na borda: encolher por baixo)"
+
+msgid "Expand the window one cell down (at the edge: shrink from the top)"
+msgstr "Expandir a janela uma célula abaixo (na borda: encolher por cima)"
+
+msgid "Open the grid popup"
+msgstr "Abrir o popup de grade"
+
+msgid "Interface"
+msgstr "Interface"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Automatic (system language)"
+msgstr "Automático (idioma do sistema)"
+
+msgid "Choose the language used by this app. “Automatic” follows the GNOME/system language."
+msgstr "Escolha o idioma usado por este app. “Automático” segue o idioma do GNOME/sistema."
+
+msgid "Applies immediately to this preferences window. The Shell popup follows the chosen language the next time it opens."
+msgstr "Aplica imediatamente nesta janela de preferências. O popup do Shell usa o idioma escolhido na próxima vez que abrir."
+
+msgid "Interface language"
+msgstr "Idioma da interface"
+
+msgid "Language used by the preferences window and extension UI. Use “system” to follow the GNOME/system language."
+msgstr "Idioma usado pela janela de preferências e pela interface da extensão. Use “system” para seguir o idioma do GNOME/sistema."
+

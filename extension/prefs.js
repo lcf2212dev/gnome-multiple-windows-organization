@@ -3,15 +3,47 @@ import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 
-import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import {
+    ExtensionPreferences,
+    gettext as gettext,
+} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import * as I18n from './lib/i18n.js';
+
+const PAGE_NAMES = Object.freeze({
+    MONITORS: 'monitors',
+    GENERAL: 'general',
+    SHORTCUTS: 'shortcuts',
+});
 
 export default class MwoPrefs extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
+        this._settings = settings;
+        this._window = window;
+        this._pages = [];
         window.set_default_size(680, 760);
-        window.add(this._buildMonitorsPage(settings));
-        window.add(this._buildGeneralPage(settings));
-        window.add(this._buildShortcutsPage(settings));
+        this._rebuildPreferencesWindow(window, settings);
+    }
+
+    _rebuildPreferencesWindow(window, settings, pageToRestore = null) {
+        const visiblePageName = pageToRestore ??
+            window.get_visible_page_name?.() ??
+            PAGE_NAMES.MONITORS;
+        for (const page of this._pages ?? [])
+            window.remove(page);
+        this._pages = [
+            this._buildMonitorsPage(settings),
+            this._buildGeneralPage(settings),
+            this._buildShortcutsPage(settings),
+        ];
+        for (const page of this._pages)
+            window.add(page);
+        if (Object.values(PAGE_NAMES).includes(visiblePageName))
+            window.set_visible_page_name(visiblePageName);
+    }
+
+    _(message) {
+        return I18n.translate(message, this._settings, gettext);
     }
 
     _readGrids(settings) {
@@ -27,18 +59,17 @@ export default class MwoPrefs extends ExtensionPreferences {
         settings.set_string('monitor-grids', JSON.stringify(grids));
     }
 
-    // ---- página Monitores -------------------------------------------------
+    // ---- Monitors page -----------------------------------------------------
 
     _buildMonitorsPage(settings) {
         const page = new Adw.PreferencesPage({
-            title: 'Monitores',
+            name: PAGE_NAMES.MONITORS,
+            title: this._('Monitors'),
             icon_name: 'video-display-symbolic',
         });
         const group = new Adw.PreferencesGroup({
-            title: 'Grade por monitor',
-            description: 'Linhas × colunas de cada tela conectada. A configuração é ' +
-                'guardada pelo conector (DP-1, HDMI-1, ...): se um monitor mudar de ' +
-                'porta, configure de novo.',
+            title: this._('Grid per monitor'),
+            description: this._('Rows × columns for each connected display. The setting is saved by connector (DP-1, HDMI-1, ...): if a monitor changes ports, configure it again.'),
         });
         page.add(group);
 
@@ -54,8 +85,8 @@ export default class MwoPrefs extends ExtensionPreferences {
                 subtitle: `${connector} — ${geometry.width}×${geometry.height}`,
                 expanded: true,
             });
-            row.add_row(this._gridSpinRow(settings, connector, 'cols', 'Colunas'));
-            row.add_row(this._gridSpinRow(settings, connector, 'rows', 'Linhas'));
+            row.add_row(this._gridSpinRow(settings, connector, 'cols', this._('Columns')));
+            row.add_row(this._gridSpinRow(settings, connector, 'rows', this._('Rows')));
             group.add(row);
         }
 
@@ -63,8 +94,8 @@ export default class MwoPrefs extends ExtensionPreferences {
             .filter(connector => !connected.includes(connector));
         if (orphans.length > 0) {
             const orphanGroup = new Adw.PreferencesGroup({
-                title: 'Configurações órfãs',
-                description: 'Conectores com grade salva mas sem monitor presente',
+                title: this._('Orphaned settings'),
+                description: this._('Connectors with a saved grid but no currently connected monitor'),
             });
             page.add(orphanGroup);
             for (const connector of orphans) {
@@ -72,12 +103,12 @@ export default class MwoPrefs extends ExtensionPreferences {
                 const entry = grids[connector] ?? {};
                 const row = new Adw.ActionRow({
                     title: connector,
-                    subtitle: `desconectado — ${entry.cols ?? '?'}×${entry.rows ?? '?'}`,
+                    subtitle: this._('disconnected — %s×%s').format(entry.cols ?? '?', entry.rows ?? '?'),
                 });
                 const remove = new Gtk.Button({
                     icon_name: 'user-trash-symbolic',
                     valign: Gtk.Align.CENTER,
-                    tooltip_text: 'Remover configuração',
+                    tooltip_text: this._('Remove setting'),
                 });
                 remove.add_css_class('flat');
                 remove.connect('clicked', () => {
@@ -116,39 +147,64 @@ export default class MwoPrefs extends ExtensionPreferences {
         return row;
     }
 
-    // ---- página Geral -----------------------------------------------------
+    // ---- General page ------------------------------------------------------
 
     _buildGeneralPage(settings) {
         const page = new Adw.PreferencesPage({
-            title: 'Geral',
+            name: PAGE_NAMES.GENERAL,
+            title: this._('General'),
             icon_name: 'preferences-system-symbolic',
         });
 
+        page.add(this._buildInterfaceGroup(settings));
+
         const gridGroup = new Adw.PreferencesGroup({
-            title: 'Grade padrão',
-            description: 'Usada por monitores sem configuração própria (1×2 imita o GNOME nativo)',
+            title: this._('Default grid'),
+            description: this._('Used by monitors without their own setting (1×2 mimics native GNOME tiling)'),
         });
-        gridGroup.add(this._settingsSpinRow(settings, 'default-cols', 'Colunas', 1, 8));
-        gridGroup.add(this._settingsSpinRow(settings, 'default-rows', 'Linhas', 1, 8));
+        gridGroup.add(this._settingsSpinRow(settings, 'default-cols', this._('Columns'), 1, 8));
+        gridGroup.add(this._settingsSpinRow(settings, 'default-rows', this._('Rows'), 1, 8));
         page.add(gridGroup);
 
-        const behaviourGroup = new Adw.PreferencesGroup({title: 'Comportamento'});
+        const behaviourGroup = new Adw.PreferencesGroup({title: this._('Behavior')});
         behaviourGroup.add(this._settingsSpinRow(settings, 'gap',
-            'Espaço entre janelas (px)', 0, 64));
+            this._('Gap between windows (px)'), 0, 64));
         const dragRow = new Adw.SwitchRow({
-            title: 'Encaixar ao arrastar',
-            subtitle: 'Bordas da tela viram zonas da grade (topo maximiza); ' +
-                'segure Ctrl durante o arrasto para ver a grade completa',
+            title: this._('Snap while dragging'),
+            subtitle: this._('Screen edges become grid zones (top maximizes); hold Ctrl while dragging to show the full grid'),
         });
         settings.bind('enable-drag-zones', dragRow, 'active', Gio.SettingsBindFlags.DEFAULT);
         behaviourGroup.add(dragRow);
         const edgeRow = this._settingsSpinRow(settings, 'edge-threshold',
-            'Espessura da zona de borda (px)', 8, 256);
+            this._('Edge zone thickness (px)'), 8, 256);
         settings.bind('enable-drag-zones', edgeRow, 'sensitive', Gio.SettingsBindFlags.GET);
         behaviourGroup.add(edgeRow);
         page.add(behaviourGroup);
 
         return page;
+    }
+
+    _buildInterfaceGroup(settings) {
+        const group = new Adw.PreferencesGroup({
+            title: this._('Interface'),
+            description: this._('Choose the language used by this app. “Automatic” follows the GNOME/system language.'),
+        });
+        const languageRow = new Adw.ComboRow({
+            title: this._('Language'),
+            subtitle: this._('Applies immediately to this preferences window. The Shell popup follows the chosen language the next time it opens.'),
+            model: Gtk.StringList.new(I18n.languageLabels(message => this._(message))),
+            selected: I18n.languageIndex(settings),
+        });
+        languageRow.connect('notify::selected', () => {
+            const selected = I18n.languageCodeAt(languageRow.get_selected());
+            if (I18n.configuredLanguageCode(settings) === selected)
+                return;
+            settings.set_string('ui-language', selected);
+            const visiblePageName = this._window.get_visible_page_name?.() ?? PAGE_NAMES.GENERAL;
+            this._rebuildPreferencesWindow(this._window, settings, visiblePageName);
+        });
+        group.add(languageRow);
+        return group;
     }
 
     _settingsSpinRow(settings, key, title, lower, upper) {
@@ -167,11 +223,12 @@ export default class MwoPrefs extends ExtensionPreferences {
         return row;
     }
 
-    // ---- página Atalhos ---------------------------------------------------
+    // ---- Shortcuts page ----------------------------------------------------
 
     _buildShortcutsPage(settings) {
         const page = new Adw.PreferencesPage({
-            title: 'Atalhos',
+            name: PAGE_NAMES.SHORTCUTS,
+            title: this._('Shortcuts'),
             icon_name: 'input-keyboard-symbolic',
         });
 
@@ -179,7 +236,7 @@ export default class MwoPrefs extends ExtensionPreferences {
             const row = new Adw.ActionRow({title, subtitle});
             row.add_suffix(new Gtk.ShortcutLabel({
                 accelerator: accelerator || '',
-                disabled_text: 'desativado',
+                disabled_text: this._('disabled'),
                 valign: Gtk.Align.CENTER,
             }));
             return row;
@@ -188,32 +245,30 @@ export default class MwoPrefs extends ExtensionPreferences {
             shortcutRow(title, settings.get_strv(key)[0] ?? '');
 
         const moveGroup = new Adw.PreferencesGroup({
-            title: 'Mover na grade',
-            description: 'Os atalhos nativos de tiling são assumidos pela grade ' +
-                'enquanto a extensão está ativa (e devolvidos ao desativá-la)',
+            title: this._('Move in grid'),
+            description: this._('Native tiling shortcuts are handled by the grid while the extension is active (and restored when disabled)'),
         });
-        moveGroup.add(shortcutRow('Mover para a esquerda', '<Super>Left'));
-        moveGroup.add(shortcutRow('Mover para a direita', '<Super>Right'));
-        moveGroup.add(fromSettings('Subir / maximizar', 'move-up'));
-        moveGroup.add(shortcutRow('Descer / restaurar', '<Super>Down'));
+        moveGroup.add(shortcutRow(this._('Move left'), '<Super>Left'));
+        moveGroup.add(shortcutRow(this._('Move right'), '<Super>Right'));
+        moveGroup.add(fromSettings(this._('Move up / maximize'), 'move-up'));
+        moveGroup.add(shortcutRow(this._('Move down / restore'), '<Super>Down'));
         page.add(moveGroup);
 
         const spanGroup = new Adw.PreferencesGroup({
-            title: 'Expandir',
-            description: 'Cresce uma célula na direção; na borda, encolhe pelo lado oposto',
+            title: this._('Expand'),
+            description: this._('Grows one cell in the chosen direction; at the edge, shrinks from the opposite side'),
         });
-        spanGroup.add(fromSettings('Expandir para a esquerda', 'span-left'));
-        spanGroup.add(fromSettings('Expandir para a direita', 'span-right'));
-        spanGroup.add(fromSettings('Expandir para cima', 'span-up'));
-        spanGroup.add(fromSettings('Expandir para baixo', 'span-down'));
+        spanGroup.add(fromSettings(this._('Expand left'), 'span-left'));
+        spanGroup.add(fromSettings(this._('Expand right'), 'span-right'));
+        spanGroup.add(fromSettings(this._('Expand up'), 'span-up'));
+        spanGroup.add(fromSettings(this._('Expand down'), 'span-down'));
         page.add(spanGroup);
 
-        const popupGroup = new Adw.PreferencesGroup({title: 'Popup de grade'});
-        popupGroup.add(fromSettings('Abrir popup', 'show-popup'));
+        const popupGroup = new Adw.PreferencesGroup({title: this._('Grid popup')});
+        popupGroup.add(fromSettings(this._('Open popup'), 'show-popup'));
         popupGroup.add(new Adw.ActionRow({
-            title: 'Personalizar atalhos',
-            subtitle: 'Edite as chaves em /org/gnome/shell/extensions/' +
-                'multiple-windows-organization/ com o dconf-editor',
+            title: this._('Customize shortcuts'),
+            subtitle: this._('Edit keys under /org/gnome/shell/extensions/multiple-windows-organization/ with dconf-editor'),
         }));
         page.add(popupGroup);
 

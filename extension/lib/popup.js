@@ -1,16 +1,19 @@
 import Clutter from 'gi://Clutter';
 import Shell from 'gi://Shell';
 import St from 'gi://St';
+import {gettext as gettext} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as Grid from './grid.js';
+import * as I18n from './i18n.js';
 
 // Popup modal com a miniatura da grade do monitor da janela focada.
 // Setas selecionam a célula, Shift+setas expandem o span, Enter/clique
 // aplicam, Esc cancela.
 export class GridPopup {
-    constructor(config, mover) {
+    constructor(config, mover, settings) {
         this._config = config;
         this._mover = mover;
+        this._settings = settings;
         this._backdrop = null;
         this._frameBox = null;
         this._grab = null;
@@ -19,6 +22,10 @@ export class GridPopup {
         this._grid = null;
         this._selection = null;
         this._cellWidgets = [];
+    }
+
+    _(message) {
+        return I18n.translate(message, this._settings, gettext);
     }
 
     open() {
@@ -63,7 +70,7 @@ export class GridPopup {
         });
         this._frameBox.add_child(new St.Label({
             style_class: 'mwo-popup-title',
-            text: `Grade ${grid.cols}×${grid.rows} — setas movem, Shift expande, Enter aplica`,
+            text: this._('Grid %d×%d — arrow keys move, Shift expands, Enter applies').format(grid.cols, grid.rows),
         }));
 
         // miniatura proporcional ao work area do monitor

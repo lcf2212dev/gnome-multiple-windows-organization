@@ -192,6 +192,77 @@ export function pressSpan(grid, cell, dir) {
     return null;
 }
 
+export function resizePushPlan(activeBefore, activeAfter, neighbors, gap = 0, tolerance = 2) {
+    const beforeLeft = activeBefore.x;
+    const beforeRight = activeBefore.x + activeBefore.width;
+    const beforeTop = activeBefore.y;
+    const beforeBottom = activeBefore.y + activeBefore.height;
+    const afterLeft = activeAfter.x;
+    const afterRight = activeAfter.x + activeAfter.width;
+    const afterTop = activeAfter.y;
+    const afterBottom = activeAfter.y + activeAfter.height;
+    const changedLeft = Math.abs(afterLeft - beforeLeft) > tolerance;
+    const changedRight = Math.abs(afterRight - beforeRight) > tolerance;
+    const changedTop = Math.abs(afterTop - beforeTop) > tolerance;
+    const changedBottom = Math.abs(afterBottom - beforeBottom) > tolerance;
+    const plan = [];
+
+    for (const neighbor of neighbors) {
+        const original = neighbor.rect;
+        const rect = {...original};
+        const right = original.x + original.width;
+        const bottom = original.y + original.height;
+        let changed = false;
+
+        if (changedBottom && (neighbor.side === 'bottom' ||
+            (_almost(original.y, beforeBottom + gap, tolerance) &&
+            _rangesOverlap(beforeLeft, beforeRight, original.x, right, tolerance)))) {
+            const y = Math.min(Math.round(afterBottom + gap), bottom - 1);
+            rect.y = y;
+            rect.height = bottom - y;
+            changed = true;
+        }
+
+        if (changedTop && (neighbor.side === 'top' ||
+            (_almost(bottom, beforeTop - gap, tolerance) &&
+            _rangesOverlap(beforeLeft, beforeRight, original.x, right, tolerance)))) {
+            const newBottom = Math.max(Math.round(afterTop - gap), original.y + 1);
+            rect.height = newBottom - original.y;
+            changed = true;
+        }
+
+        if (changedRight && (neighbor.side === 'right' ||
+            (_almost(original.x, beforeRight + gap, tolerance) &&
+            _rangesOverlap(beforeTop, beforeBottom, original.y, bottom, tolerance)))) {
+            const x = Math.min(Math.round(afterRight + gap), right - 1);
+            rect.x = x;
+            rect.width = right - x;
+            changed = true;
+        }
+
+        if (changedLeft && (neighbor.side === 'left' ||
+            (_almost(right, beforeLeft - gap, tolerance) &&
+            _rangesOverlap(beforeTop, beforeBottom, original.y, bottom, tolerance)))) {
+            const newRight = Math.max(Math.round(afterLeft - gap), original.x + 1);
+            rect.width = newRight - original.x;
+            changed = true;
+        }
+
+        if (changed)
+            plan.push({...neighbor, rect});
+    }
+
+    return plan;
+}
+
+function _almost(a, b, tolerance = 2) {
+    return Math.abs(a - b) <= tolerance;
+}
+
+function _rangesOverlap(aStart, aEnd, bStart, bEnd, tolerance = 0) {
+    return Math.min(aEnd, bEnd) - Math.max(aStart, bStart) > tolerance;
+}
+
 export function cellsEqual(a, b) {
     return a.col === b.col && a.row === b.row &&
         a.colSpan === b.colSpan && a.rowSpan === b.rowSpan;

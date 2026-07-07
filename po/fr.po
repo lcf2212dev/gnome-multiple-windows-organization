@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: multiple-windows-organization\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-07 00:00+0000\n"
+"PO-Revision-Date: 2026-07-07 00:00+0000\n"
+"Last-Translator: Hermes Agent <noreply@nousresearch.com>\n"
+"Language-Team: fr\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Multiple Windows Organization"
+msgstr "Organisation des fenêtres"
+
+msgid "Configurable tiling grid (rows × columns) per monitor: keyboard shortcuts, drag zones, and a grid popup."
+msgstr "Grille de pavage configurable (lignes × colonnes) par moniteur : raccourcis clavier, zones de glisser et fenêtre contextuelle de grille."
+
+msgid "Monitors"
+msgstr "Moniteurs"
+
+msgid "Grid per monitor"
+msgstr "Grille par moniteur"
+
+msgid "Rows × columns for each connected display. The setting is saved by connector (DP-1, HDMI-1, ...): if a monitor changes ports, configure it again."
+msgstr "Lignes × colonnes pour chaque écran connecté. Le réglage est enregistré par connecteur (DP-1, HDMI-1, ...) : si un moniteur change de port, configurez-le à nouveau."
+
+msgid "Columns"
+msgstr "Colonnes"
+
+msgid "Rows"
+msgstr "Lignes"
+
+msgid "Orphaned settings"
+msgstr "Réglages orphelins"
+
+msgid "Connectors with a saved grid but no currently connected monitor"
+msgstr "Connecteurs avec une grille enregistrée mais sans moniteur connecté actuellement"
+
+msgid "disconnected — %s×%s"
+msgstr "déconnecté — %s×%s"
+
+msgid "Remove setting"
+msgstr "Supprimer le réglage"
+
+msgid "General"
+msgstr "Général"
+
+msgid "Default grid"
+msgstr "Grille par défaut"
+
+msgid "Used by monitors without their own setting (1×2 mimics native GNOME tiling)"
+msgstr "Utilisée par les moniteurs sans réglage propre (1×2 imite le pavage natif de GNOME)"
+
+msgid "Behavior"
+msgstr "Comportement"
+
+msgid "Gap between windows (px)"
+msgstr "Espace entre les fenêtres (px)"
+
+msgid "Snap while dragging"
+msgstr "Ancrer pendant le glisser"
+
+msgid "Screen edges become grid zones (top maximizes); hold Ctrl while dragging to show the full grid"
+msgstr "Les bords de l’écran deviennent des zones de grille (le haut maximise) ; maintenez Ctrl pendant le glisser pour afficher toute la grille"
+
+msgid "Edge zone thickness (px)"
+msgstr "Épaisseur de la zone de bord (px)"
+
+msgid "Shortcuts"
+msgstr "Raccourcis"
+
+msgid "disabled"
+msgstr "désactivé"
+
+msgid "Move in grid"
+msgstr "Déplacer dans la grille"
+
+msgid "Native tiling shortcuts are handled by the grid while the extension is active (and restored when disabled)"
+msgstr "Les raccourcis de pavage natifs sont gérés par la grille pendant que l’extension est active (et restaurés à la désactivation)"
+
+msgid "Move left"
+msgstr "Déplacer à gauche"
+
+msgid "Move right"
+msgstr "Déplacer à droite"
+
+msgid "Move up / maximize"
+msgstr "Monter / maximiser"
+
+msgid "Move down / restore"
+msgstr "Descendre / restaurer"
+
+msgid "Expand"
+msgstr "Agrandir"
+
+msgid "Grows one cell in the chosen direction; at the edge, shrinks from the opposite side"
+msgstr "Agrandit d’une cellule dans la direction choisie ; au bord, réduit depuis le côté opposé"
+
+msgid "Expand left"
+msgstr "Agrandir à gauche"
+
+msgid "Expand right"
+msgstr "Agrandir à droite"
+
+msgid "Expand up"
+msgstr "Agrandir vers le haut"
+
+msgid "Expand down"
+msgstr "Agrandir vers le bas"
+
+msgid "Grid popup"
+msgstr "Fenêtre de grille"
+
+msgid "Open popup"
+msgstr "Ouvrir la fenêtre"
+
+msgid "Customize shortcuts"
+msgstr "Personnaliser les raccourcis"
+
+msgid "Edit keys under /org/gnome/shell/extensions/multiple-windows-organization/ with dconf-editor"
+msgstr "Modifiez les clés sous /org/gnome/shell/extensions/multiple-windows-organization/ avec dconf-editor"
+
+msgid "Grid %d×%d — arrow keys move, Shift expands, Enter applies"
+msgstr "Grille %d×%d — les flèches déplacent, Shift agrandit, Entrée applique"
+
+msgid "JSON keyed by connector, e.g. {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+msgstr "JSON indexé par connecteur, p. ex. {\"DP-1\":{\"rows\":1,\"cols\":3}}"
+
+msgid "Default rows for monitors without a custom setting"
+msgstr "Lignes par défaut pour les moniteurs sans réglage personnalisé"
+
+msgid "Default columns for monitors without a custom setting"
+msgstr "Colonnes par défaut pour les moniteurs sans réglage personnalisé"
+
+msgid "Space between cells and around edges, in logical pixels"
+msgstr "Espace entre les cellules et autour des bords, en pixels logiques"
+
+msgid "Snap windows to the grid while dragging"
+msgstr "Ancrer les fenêtres à la grille pendant le glisser"
+
+msgid "Edge zone thickness while dragging, in pixels"
+msgstr "Épaisseur de la zone de bord pendant le glisser, en pixels"
+
+msgid "Internal sentinel: the extension disabled native edge tiling"
+msgstr "Sentinelle interne : l’extension a désactivé le pavage natif des bords"
+
+msgid "Used to safely restore org.gnome.mutter edge-tiling even after a crash."
+msgstr "Utilisé pour restaurer en sécurité org.gnome.mutter edge-tiling même après un plantage."
+
+msgid "Move the window one cell up (at the top: maximize)"
+msgstr "Déplacer la fenêtre d’une cellule vers le haut (en haut : maximiser)"
+
+msgid "Move the window one cell left (optional; the default comes from native Super+Left)"
+msgstr "Déplacer la fenêtre d’une cellule à gauche (facultatif ; la valeur par défaut vient du Super+Gauche natif)"
+
+msgid "Move the window one cell right (optional; the default comes from native Super+Right)"
+msgstr "Déplacer la fenêtre d’une cellule à droite (facultatif ; la valeur par défaut vient du Super+Droite natif)"
+
+msgid "Move the window one cell down (optional; the default comes from native Super+Down)"
+msgstr "Déplacer la fenêtre d’une cellule vers le bas (facultatif ; la valeur par défaut vient du Super+Bas natif)"
+
+msgid "Expand the window one cell left (at the edge: shrink from the right)"
+msgstr "Agrandir la fenêtre d’une cellule à gauche (au bord : réduire depuis la droite)"
+
+msgid "Expand the window one cell right (at the edge: shrink from the left)"
+msgstr "Agrandir la fenêtre d’une cellule à droite (au bord : réduire depuis la gauche)"
+
+msgid "Expand the window one cell up (at the edge: shrink from the bottom)"
+msgstr "Agrandir la fenêtre d’une cellule vers le haut (au bord : réduire depuis le bas)"
+
+msgid "Expand the window one cell down (at the edge: shrink from the top)"
+msgstr "Agrandir la fenêtre d’une cellule vers le bas (au bord : réduire depuis le haut)"
+
+msgid "Open the grid popup"
+msgstr "Ouvrir la fenêtre de grille"
+
+msgid "Interface"
+msgstr "Interface"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Automatic (system language)"
+msgstr "Automatique (langue du système)"
+
+msgid "Choose the language used by this app. “Automatic” follows the GNOME/system language."
+msgstr "Choisissez la langue utilisée par cette application. « Automatique » suit la langue de GNOME/du système."
+
+msgid "Applies immediately to this preferences window. The Shell popup follows the chosen language the next time it opens."
+msgstr "S’applique immédiatement à cette fenêtre de préférences. La fenêtre de Shell utilisera la langue choisie à sa prochaine ouverture."
+
+msgid "Interface language"
+msgstr "Langue de l’interface"
+
+msgid "Language used by the preferences window and extension UI. Use “system” to follow the GNOME/system language."
+msgstr "Langue utilisée par la fenêtre de préférences et l’interface de l’extension. Utilisez « system » pour suivre la langue de GNOME/du système."
+

@@ -14,7 +14,10 @@ EXT_LINK="${EXT_BASE}/${UUID}"
 USER_APP_DIR="${HOME}/.local/share/applications"
 DESKTOP_FILE="br.dev.lcf2212.MultipleWindowsOrganization.desktop"
 SCHEMA_DIR="${REPO_DIR}/extension/schemas"
+LOCALE_DIR="${REPO_DIR}/extension/locale"
+PO_DIR="${REPO_DIR}/po"
 MWO_SCHEMA="org.gnome.shell.extensions.multiple-windows-organization"
+GETTEXT_DOMAIN="multiple-windows-organization"
 
 step() { printf "\n\033[1;36m==> %s\033[0m\n" "$1"; }
 ok()   { printf "    \033[1;32m✓\033[0m %s\n" "$1"; }
@@ -41,12 +44,37 @@ check_shell_version() {
     fi
 }
 
+compile_translations() {
+    step "Compilando traduções"
+    if ! command -v msgfmt >/dev/null 2>&1; then
+        warn "msgfmt não encontrado; instale gettext para gerar traduções."
+        return
+    fi
+    shopt -s nullglob
+    local po_files=("${PO_DIR}"/*.po)
+    shopt -u nullglob
+    if [[ "${#po_files[@]}" -eq 0 ]]; then
+        warn "Nenhum arquivo .po encontrado em ${PO_DIR}."
+        return
+    fi
+    local po lang out
+    for po in "${po_files[@]}"; do
+        lang="$(basename "${po}" .po)"
+        out="${LOCALE_DIR}/${lang}/LC_MESSAGES/${GETTEXT_DOMAIN}.mo"
+        mkdir -p "$(dirname "${out}")"
+        msgfmt --check --output-file="${out}" "${po}"
+        ok "${lang}: $(realpath --relative-to="${REPO_DIR}" "${out}")"
+    done
+}
+
 do_install() {
     check_shell_version
 
     step "Compilando schema GSettings"
     glib-compile-schemas "${SCHEMA_DIR}"
     ok "gschemas.compiled gerado."
+
+    compile_translations
 
     step "Instalando a extensão (symlink)"
     mkdir -p "${EXT_BASE}"

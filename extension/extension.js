@@ -12,7 +12,7 @@ export default class MwoExtension extends Extension {
         this._settings = this.getSettings();
         this._config = new MonitorConfigManager(this._settings);
         this._mover = new WindowMover(this._config);
-        this._popup = new GridPopup(this._config, this._mover);
+        this._popup = new GridPopup(this._config, this._mover, this._settings);
         this._keybindings = new GridKeybindings(this._settings, this._mover, this._popup);
         this._keybindings.enable();
         this._dragZones = new DragZones(this._settings, this._config, this._mover);

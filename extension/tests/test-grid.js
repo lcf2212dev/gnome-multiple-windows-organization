@@ -137,6 +137,37 @@ const cell = (col, row, colSpan = 1, rowSpan = 1) => ({col, row, colSpan, rowSpa
     check('press up sem espaço: null', Grid.pressSpan(grid, cell(0, 0), 'up'), null);
 }
 
+// ---- resizePushPlan: redimensionar uma janela empurra/puxa vizinhas adjacentes ----
+{
+    const topBefore = {x: 0, y: 0, width: 500, height: 300};
+    const topAfter = {x: 0, y: 0, width: 500, height: 360};
+    const bottom = {id: 'bottom', rect: {x: 0, y: 300, width: 500, height: 300}};
+    check('resize bottom-edge: top maior empurra janela de baixo',
+        Grid.resizePushPlan(topBefore, topAfter, [bottom]),
+        [{id: 'bottom', rect: {x: 0, y: 360, width: 500, height: 240}}]);
+
+    const bottomBefore = {x: 0, y: 300, width: 500, height: 300};
+    const bottomAfter = {x: 0, y: 240, width: 500, height: 360};
+    const top = {id: 'top', rect: {x: 0, y: 0, width: 500, height: 300}};
+    check('resize top-edge: janela de baixo maior empurra janela de cima',
+        Grid.resizePushPlan(bottomBefore, bottomAfter, [top]),
+        [{id: 'top', rect: {x: 0, y: 0, width: 500, height: 240}}]);
+
+    const leftBefore = {x: 0, y: 0, width: 400, height: 500};
+    const leftAfter = {x: 0, y: 0, width: 450, height: 500};
+    const right = {id: 'right', rect: {x: 412, y: 0, width: 400, height: 500}};
+    check('resize right-edge com gap: esquerda maior empurra janela da direita',
+        Grid.resizePushPlan(leftBefore, leftAfter, [right], 12),
+        [{id: 'right', rect: {x: 462, y: 0, width: 350, height: 500}}]);
+
+    const driftedBefore = {x: 0, y: 0, width: 500, height: 360};
+    const driftedAfter = {x: 0, y: 0, width: 500, height: 320};
+    const driftedBottom = {id: 'bottom', side: 'bottom', rect: {x: 0, y: 420, width: 500, height: 180}};
+    check('resize bottom-edge: vizinha lógica continua puxando mesmo se deixou de encostar em pixels',
+        Grid.resizePushPlan(driftedBefore, driftedAfter, [driftedBottom]),
+        [{id: 'bottom', side: 'bottom', rect: {x: 0, y: 320, width: 500, height: 280}}]);
+}
+
 // ---- clampCell ----
 {
     const grid = {rows: 2, cols: 3};

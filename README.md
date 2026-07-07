@@ -14,6 +14,14 @@ uma grade de linhas × colunas** — em vez do snap nativo de só duas metades
         cada monitor com a SUA grade, configurada pelo app
 ```
 
+## Sistemas suportados
+
+Suporte oficial: **Linux + GNOME Shell 50 + Wayland**.
+
+O projeto é desenvolvido e testado no Manjaro GNOME. Outras distribuições Linux
+podem funcionar se usarem GNOME Shell 50 em sessão Wayland. Windows, macOS, X11
+e outros ambientes gráficos não são suportados.
+
 ## Por que uma extensão do Shell?
 
 No GNOME em Wayland, nenhum processo externo pode mover/redimensionar janelas
@@ -52,6 +60,14 @@ gravado em configurações — crash não deixa rastro).
 
 Uma janela "solta" (fora da grade) primeiro **encaixa** na célula mais próxima;
 os apertos seguintes movem de célula em célula.
+
+### Redimensionar com o mouse
+
+Quando duas janelas já estão encaixadas e compartilham uma borda, redimensionar
+uma delas **empurra ou puxa** a vizinha para manter o mosaico sem sobreposição.
+Ex.: numa grade `1 coluna × 2 linhas`, aumentar a janela de cima para baixo
+reduz e desloca a janela de baixo; aumentar a janela de baixo para cima faz o
+inverso.
 
 ### Arrastar (zonas)
 
@@ -107,6 +123,9 @@ Abra **Organização de Janelas** no menu de apps (ou
   janelas (gap) e liga/desliga do encaixe ao arrastar.
 - **Atalhos** — referência dos atalhos ativos (edição pelo `dconf-editor` em
   `/org/gnome/shell/extensions/multiple-windows-organization/`).
+- **Idiomas** — seletor em **Geral → Interface → Idioma**, com modo
+  automático (idioma do GNOME/sistema) ou escolha manual entre inglês,
+  português, espanhol, francês, alemão e mandarim (`zh_CN`).
 
 Mudanças valem **na hora** (live-reload), sem recarregar a extensão.
 
