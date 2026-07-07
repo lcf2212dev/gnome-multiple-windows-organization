@@ -1,8 +1,8 @@
-# Multiple Windows Organization (Organização de Janelas)
+# Multiple Windows Organization
 
-Extensão do GNOME Shell + app de configuração para dividir **cada monitor em
-uma grade de linhas × colunas** — em vez do snap nativo de só duas metades
-(esquerda/direita). Feita para GNOME 50 em Wayland (Manjaro).
+GNOME Shell extension + preferences app that divides **each monitor into a
+configurable rows × columns grid** instead of the native two-half
+left/right snap. Built for GNOME Shell 50 on Wayland (Manjaro).
 
 ```
    DP-1 · ultrawide (1×3)             DP-2 (2×2)          HDMI-1 (2×2)
@@ -11,92 +11,95 @@ uma grade de linhas × colunas** — em vez do snap nativo de só duas metades
  │       │       │       │         ├─────┼─────┤        ├─────┼─────┤
  │       │       │       │         │     │     │        │     │     │
  └───────┴───────┴───────┘         └─────┴─────┘        └─────┴─────┘
-        cada monitor com a SUA grade, configurada pelo app
+        each monitor has its own grid, configured in the app
 ```
 
-## Sistemas suportados
+## Supported systems
 
-Suporte oficial: **Linux + GNOME Shell 50 + Wayland**.
+Official support: **Linux + GNOME Shell 50 + Wayland**.
 
-O projeto é desenvolvido e testado no Manjaro GNOME. Outras distribuições Linux
-podem funcionar se usarem GNOME Shell 50 em sessão Wayland. Windows, macOS, X11
-e outros ambientes gráficos não são suportados.
+The project is developed and tested on Manjaro GNOME. Other Linux distributions
+may work if they run GNOME Shell 50 in a Wayland session. Windows, macOS, X11,
+and other desktop environments are not supported.
 
-## Por que uma extensão do Shell?
+## Why a Shell extension?
 
-No GNOME em Wayland, nenhum processo externo pode mover/redimensionar janelas
-de outros apps — só código rodando dentro do compositor (Mutter). Por isso o
-projeto é uma extensão; o "aplicativo" é a janela de preferências dela,
-disponível no menu como **Organização de Janelas**.
+On GNOME Wayland, external processes cannot move or resize windows from other
+apps. Only code running inside the compositor (Mutter) can do that. That is why
+this project is a Shell extension; the "app" is the extension preferences
+window, available from the application menu as **Multiple Windows Organization**.
 
-## Instalação
+## Installation
 
 ```bash
-./setup.sh install     # compila o schema, symlinka a extensão, instala o .desktop
-./setup.sh status      # confere o estado
-./setup.sh uninstall   # remove tudo e restaura o edge-tiling nativo
+./setup.sh install     # compile the schema, symlink the extension, install the .desktop file
+./setup.sh status      # check the current state
+./setup.sh uninstall   # remove everything and restore native edge tiling
 ```
 
-> **Primeira instalação:** o GNOME Shell (Wayland) só escaneia extensões novas
-> no login. Faça **logout/login** e rode
+> **First install:** GNOME Shell on Wayland only scans new extensions at login.
+> Log out/in, then run
 > `gnome-extensions enable multiple-windows-organization@lcf2212dev`
-> (ou habilite pelo app Extensões). Depois disso, enable/disable valem na hora.
+> or enable it from the Extensions app. After that, enable/disable takes effect
+> immediately.
 
-## Como usar
+## Usage
 
-### Teclado
+### Keyboard
 
-| Atalho | Ação |
+| Shortcut | Action |
 |---|---|
-| `Super` + `←` / `→` | Move a janela uma célula; na borda do monitor, pula para o monitor vizinho |
-| `Super` + `↑` | Sobe uma linha; na linha de cima (ou grade de 1 linha), **maximiza** |
-| `Super` + `↓` | Desce uma linha; se maximizada, **restaura** para a célula anterior |
-| `Super` + `Ctrl` + setas | **Expande** a janela uma célula na direção; na borda, encolhe pelo lado oposto ("empurra") |
-| `Super` + `G` | Abre o **popup de grade** |
+| `Super` + `←` / `→` | Move the window by one cell; at the monitor edge, jump to the neighboring monitor |
+| `Super` + `↑` | Move up by one row; on the top row, or in a one-row grid, **maximize** |
+| `Super` + `↓` | Move down by one row; if maximized, **restore** to the previous cell |
+| `Super` + `Ctrl` + arrows | **Expand** the window by one cell in that direction; at the edge, shrink from the opposite side ("push") |
+| `Super` + `G` | Open the **grid popup** |
 
-Os atalhos nativos `Super+←/→/↓` são assumidos pela grade enquanto a extensão
-está ativa e devolvidos ao Mutter no momento em que ela é desativada (nada é
-gravado em configurações — crash não deixa rastro).
+The native `Super+←/→/↓` shortcuts are taken over by the grid while the
+extension is active and returned to Mutter when the extension is disabled.
+Nothing is persisted to settings, so a crash does not leave shortcut changes
+behind.
 
-Uma janela "solta" (fora da grade) primeiro **encaixa** na célula mais próxima;
-os apertos seguintes movem de célula em célula.
+A floating window, one that is outside the grid, first **snaps** to the nearest
+cell. Later key presses move it cell by cell.
 
-### Redimensionar com o mouse
+### Mouse resizing
 
-Quando duas janelas já estão encaixadas e compartilham uma borda, redimensionar
-uma delas **empurra ou puxa** a vizinha para manter o mosaico sem sobreposição.
-Ex.: numa grade `1 coluna × 2 linhas`, aumentar a janela de cima para baixo
-reduz e desloca a janela de baixo; aumentar a janela de baixo para cima faz o
-inverso.
+When two snapped windows share an edge, resizing one of them **pushes or pulls**
+the neighbor to keep the tiling layout without overlap. For example, in a
+`1 column × 2 rows` grid, growing the top window downward shrinks and moves the
+bottom window; growing the bottom window upward does the inverse.
 
-### Arrastar (zonas)
+### Dragging zones
 
-Arrastando uma janela, as bordas da tela viram zonas de encaixe:
+While dragging a window, the screen edges become snap zones:
 
 ```
- ┌──────────────── maximizar ────────────────┐
- │▓▓                                        ▓▓│
- │▓▓  coluna 0        (livre)      coluna N ▓▓│
- │▓▓  linha do Y                            ▓▓│
- │▓▓                                        ▓▓│
- └──── linha de baixo, coluna conforme o X ───┘
+ ┌──────────────── maximize ────────────────┐
+ │▓▓                                      ▓▓│
+ │▓▓  column 0       (free)      column N ▓▓│
+ │▓▓  cursor row                         ▓▓│
+ │▓▓                                      ▓▓│
+ └──── bottom row, column based on X ──────┘
 ```
 
-- **Topo** = maximizar (o gesto nativo continua valendo)
-- **Esquerda/direita** = primeira/última coluna, na linha correspondente à altura do cursor
-- **Fundo** = última linha, na coluna correspondente ao X — com grade de 1 linha, é o jeito de alcançar as colunas do meio sem teclado
-- **Segure `Ctrl` durante o arrasto** = a grade completa aparece como zonas; solte sobre qualquer célula
+- **Top** = maximize; the native maximize gesture still works.
+- **Left/right** = first/last column, on the row that matches the cursor height.
+- **Bottom** = last row, on the column that matches the cursor X position. In a
+  one-row grid, this is the way to reach middle columns without the keyboard.
+- **Hold `Ctrl` while dragging** = show the full grid as drop zones; release on
+  any cell.
 
-Soltar fora de qualquer zona = arrasto livre normal. O half-tiling nativo
-(`org.gnome.mutter edge-tiling`) é desligado enquanto a extensão está ativa e
-restaurado ao desativar/desinstalar (com sentinela à prova de crash).
+Dropping outside every zone keeps the normal free drag. Native half tiling
+(`org.gnome.mutter edge-tiling`) is disabled while the extension is active and
+restored on disable/uninstall, with a crash-safe sentinel.
 
-### Popup de grade (`Super+G`)
+### Grid popup (`Super+G`)
 
 ```
         ┌───────────────────────────────┐
-        │  Grade 3×2 — setas movem,     │
-        │  Shift expande, Enter aplica  │
+        │  Grid 3×2 — arrows move,      │
+        │  Shift expands, Enter applies │
         │  ┌─────┐┌─────┐┌─────┐        │
         │  │ ▓▓▓ ││     ││     │        │
         │  └─────┘└─────┘└─────┘        │
@@ -106,32 +109,36 @@ restaurado ao desativar/desinstalar (com sentinela à prova de crash).
         └───────────────────────────────┘
 ```
 
-Setas movem a seleção, `Shift+setas` expandem o span, `Enter`/clique aplicam,
-`Esc` cancela.
+Arrow keys move the selection, `Shift+arrows` expands the span, `Enter` or click
+applies it, and `Esc` cancels.
 
-## Configuração — o app
+## Configuration — the app
 
-Abra **Organização de Janelas** no menu de apps (ou
-`gnome-extensions prefs multiple-windows-organization@lcf2212dev`):
+Open **Multiple Windows Organization** from the application menu, or run:
 
-- **Monitores** — linhas × colunas de cada tela conectada, identificada pelo
-  **conector** (`DP-1`, `HDMI-1`, ...). Importante aqui: dois monitores do
-  mesmo modelo são distinguidos pela porta — se um monitor trocar de porta,
-  configure de novo (a entrada antiga aparece como "órfã", com botão de
-  remover).
-- **Geral** — grade padrão para monitores sem configuração, espaço entre
-  janelas (gap) e liga/desliga do encaixe ao arrastar.
-- **Atalhos** — referência dos atalhos ativos (edição pelo `dconf-editor` em
-  `/org/gnome/shell/extensions/multiple-windows-organization/`).
-- **Idiomas** — seletor em **Geral → Interface → Idioma**, com modo
-  automático (idioma do GNOME/sistema) ou escolha manual entre inglês,
-  português, espanhol, francês, alemão e mandarim (`zh_CN`).
+```bash
+gnome-extensions prefs multiple-windows-organization@lcf2212dev
+```
 
-Mudanças valem **na hora** (live-reload), sem recarregar a extensão.
+- **Monitors** — rows × columns for each connected display, identified by its
+  **connector** (`DP-1`, `HDMI-1`, ...). Two monitors of the same model are
+  distinguished by port. If a monitor moves to another port, configure it again;
+  the old entry appears as "orphaned" and can be removed.
+- **General** — default grid for monitors without a custom configuration, window
+  gap, and drag-zone enable/disable.
+- **Shortcuts** — reference for active shortcuts. They can be edited through
+  `dconf-editor` at
+  `/org/gnome/shell/extensions/multiple-windows-organization/`.
+- **Languages** — selector under **General → Interface → Language**, with an
+  automatic mode that follows GNOME/the system language, or a manual choice
+  between English, Portuguese, Spanish, French, German, and Mandarin (`zh_CN`).
 
-## Scripting via D-Bus
+Changes apply **immediately** through live reload, without reloading the
+extension.
 
-A extensão expõe uma interface para automação:
+## D-Bus scripting
+
+The extension exposes an automation interface:
 
 ```bash
 DEST=(--session --dest org.gnome.Shell
@@ -140,42 +147,47 @@ M=br.dev.lcf2212.MultipleWindowsOrganization
 
 gdbus call "${DEST[@]}" --method $M.MoveFocused right
 gdbus call "${DEST[@]}" --method $M.SpanFocused down
-gdbus call "${DEST[@]}" --method $M.MoveFocusedToCell 0 2 0 1 2   # monitor, col, linha, spans
+gdbus call "${DEST[@]}" --method $M.MoveFocusedToCell 0 2 0 1 2   # monitor, col, row, spans
 gdbus call "${DEST[@]}" --method $M.GetState | sed "s/^('//;s/',)$//" | jq .
 ```
 
-## Desenvolvimento e testes
+## Development and tests
 
 ```bash
-gjs -m extension/tests/test-grid.js      # unit da geometria (sem compositor)
-./extension/tests/headless-e2e.sh        # E2E: gnome-shell --headless isolado,
-                                         # 2 monitores virtuais, janela real,
-                                         # movimentos via D-Bus
+gjs -m extension/tests/test-grid.js      # geometry unit tests, no compositor needed
+gjs -m extension/tests/test-i18n.js      # localization unit tests
+./extension/tests/headless-e2e.sh        # isolated gnome-shell --headless E2E:
+                                         # 2 virtual monitors, real window,
+                                         # D-Bus-driven moves
 ```
 
-O E2E roda num D-Bus e dconf **isolados** — não toca na sessão real. Para
-testar visualmente sem relogar (zonas de arrasto, popup), há o devkit do
-Mutter 18: `sudo pacman -S mutter-devkit` e
+The E2E test runs in an **isolated** D-Bus and dconf environment; it does not
+touch the real session. For visual testing without logging out, such as drag
+zones and the popup, use the Mutter 18 devkit:
 
 ```bash
+sudo pacman -S mutter-devkit
+
 dbus-run-session -- gnome-shell --wayland --devkit \
   --virtual-monitor 3440x1440 --virtual-monitor 1920x1080
 ```
 
-(atalhos de teclado não chegam à sessão aninhada — teclado se testa na sessão
-real; iterar código exige relançar o devkit, pois re-enable não recarrega ESM).
+Keyboard shortcuts do not reach the nested session, so keyboard behavior must be
+tested in the real session. When iterating on code, restart the devkit; re-enable
+does not reload ESM modules.
 
-## Solução de problemas
+## Troubleshooting
 
-- **Extensão não aparece após instalar** — logout/login pendente (primeira vez).
-- **Snap nativo de metades sumiu depois de remover na mão** — restaure com
-  `gsettings set org.gnome.mutter edge-tiling true` (o `setup.sh uninstall`
-  faz isso sozinho).
-- **Erros da extensão** — `journalctl /usr/bin/gnome-shell -f` com o prefixo
-  `[MWO]` ou `JS ERROR`.
-- **Monitor trocou de porta e "perdeu" a grade** — reconfigure no app; remova a
-  entrada órfã antiga.
+- **The extension does not appear after install** — first-install logout/login is
+  still pending.
+- **Native half snap disappeared after manually removing the extension** —
+  restore it with `gsettings set org.gnome.mutter edge-tiling true`. The
+  `setup.sh uninstall` command does this automatically.
+- **Extension errors** — run `journalctl /usr/bin/gnome-shell -f` and look for
+  `[MWO]` or `JS ERROR`.
+- **A monitor changed ports and "lost" its grid** — configure it again in the
+  app, then remove the old orphaned entry.
 
-## Licença
+## License
 
 [MIT](LICENSE) — Leandro Faria, 2026.
