@@ -54,6 +54,7 @@ window, available from the application menu as **Multiple Windows Organization**
 | `Super` + `↓` | Move down by one row; if maximized, **restore** to the previous cell |
 | `Super` + `Ctrl` + arrows | **Expand** the window by one cell in that direction; at the edge, shrink from the opposite side ("push") |
 | `Super` + `G` | Open the **grid popup** |
+| `Super` + `Ctrl` + `G` | Automatically organize every movable window on the focused monitor |
 
 The native `Super+←/→/↓` shortcuts are taken over by the grid while the
 extension is active and returned to Mutter when the extension is disabled.
@@ -62,6 +63,10 @@ behind.
 
 A floating window, one that is outside the grid, first **snaps** to the nearest
 cell. Later key presses move it cell by cell.
+
+`Super+Ctrl+G` tiles every movable window on the focused monitor. It uses the
+monitor grid you configured, and temporarily expands that grid when there are
+more windows than configured cells.
 
 ### Mouse resizing
 
@@ -149,6 +154,7 @@ M=br.dev.lcf2212.MultipleWindowsOrganization
 gdbus call "${DEST[@]}" --method $M.MoveFocused right
 gdbus call "${DEST[@]}" --method $M.SpanFocused down
 gdbus call "${DEST[@]}" --method $M.MoveFocusedToCell 0 2 0 1 2   # monitor, col, row, spans
+gdbus call "${DEST[@]}" --method $M.OrganizeFocusedMonitor
 gdbus call "${DEST[@]}" --method $M.GetState | sed "s/^('//;s/',)$//" | jq .
 ```
 

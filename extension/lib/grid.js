@@ -192,6 +192,33 @@ export function pressSpan(grid, cell, dir) {
     return null;
 }
 
+function _autoLayoutGrid(grid, count) {
+    const layout = {rows: Math.max(1, grid.rows | 0), cols: Math.max(1, grid.cols | 0)};
+    const needed = Math.max(0, count | 0);
+    while (layout.rows * layout.cols < needed) {
+        if (layout.cols >= layout.rows)
+            layout.cols++;
+        else
+            layout.rows++;
+    }
+    return layout;
+}
+
+export function autoLayoutCells(grid, count) {
+    const layout = _autoLayoutGrid(grid, count);
+    const cells = [];
+    const needed = Math.max(0, count | 0);
+    for (let i = 0; i < needed; i++) {
+        cells.push({
+            col: i % layout.cols,
+            row: Math.floor(i / layout.cols),
+            colSpan: 1,
+            rowSpan: 1,
+        });
+    }
+    return {grid: layout, cells};
+}
+
 export function resizePushPlan(activeBefore, activeAfter, neighbors, gap = 0, tolerance = 2) {
     const beforeLeft = activeBefore.x;
     const beforeRight = activeBefore.x + activeBefore.width;

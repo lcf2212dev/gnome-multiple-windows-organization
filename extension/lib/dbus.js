@@ -25,6 +25,9 @@ const IFACE = `
       <arg type="i" name="rowSpan" direction="in"/>
       <arg type="s" name="result" direction="out"/>
     </method>
+    <method name="OrganizeFocusedMonitor">
+      <arg type="s" name="result" direction="out"/>
+    </method>
     <method name="GetState">
       <arg type="s" name="json" direction="out"/>
     </method>
@@ -83,6 +86,13 @@ export class MwoDBus {
             return 'no-window';
         const ok = this._mover.moveToCell(window, monitor, {col, row, colSpan, rowSpan});
         return ok ? 'ok' : 'not-tileable';
+    }
+
+    OrganizeFocusedMonitor() {
+        const window = this._window();
+        if (!window)
+            return 'no-window';
+        return `ok:${this._mover.organizeMonitor(window)}`;
     }
 
     GetState() {

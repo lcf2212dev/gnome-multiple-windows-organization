@@ -168,6 +168,20 @@ const cell = (col, row, colSpan = 1, rowSpan = 1) => ({col, row, colSpan, rowSpa
         [{id: 'bottom', side: 'bottom', rect: {x: 0, y: 320, width: 500, height: 280}}]);
 }
 
+// ---- autoLayoutCells: distribuição automática de janelas ----
+{
+    check('auto layout vazio', Grid.autoLayoutCells({rows: 1, cols: 3}, 0),
+        {grid: {rows: 1, cols: 3}, cells: []});
+    check('auto layout usa a grade configurada quando cabe', Grid.autoLayoutCells({rows: 1, cols: 3}, 3),
+        {grid: {rows: 1, cols: 3}, cells: [cell(0, 0), cell(1, 0), cell(2, 0)]});
+    check('auto layout expande colunas em monitor horizontal', Grid.autoLayoutCells({rows: 1, cols: 3}, 4),
+        {grid: {rows: 1, cols: 4}, cells: [cell(0, 0), cell(1, 0), cell(2, 0), cell(3, 0)]});
+    check('auto layout expande linhas em monitor vertical', Grid.autoLayoutCells({rows: 3, cols: 1}, 4),
+        {grid: {rows: 4, cols: 1}, cells: [cell(0, 0), cell(0, 1), cell(0, 2), cell(0, 3)]});
+    check('auto layout preenche em ordem linha-coluna', Grid.autoLayoutCells({rows: 2, cols: 2}, 5),
+        {grid: {rows: 2, cols: 3}, cells: [cell(0, 0), cell(1, 0), cell(2, 0), cell(0, 1), cell(1, 1)]});
+}
+
 // ---- clampCell ----
 {
     const grid = {rows: 2, cols: 3};

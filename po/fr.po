@@ -197,3 +197,18 @@ msgstr "Langue de l’interface"
 msgid "Language used by the preferences window and extension UI. Use “system” to follow the GNOME/system language."
 msgstr "Langue utilisée par la fenêtre de préférences et l’interface de l’extension. Utilisez « system » pour suivre la langue de GNOME/du système."
 
+
+msgid "Automatic layout"
+msgstr "Disposition automatique"
+
+msgid "Tile every movable window on the focused monitor"
+msgstr "Dispose toutes les fenêtres déplaçables sur le moniteur actif"
+
+msgid "Organize monitor"
+msgstr "Organiser le moniteur"
+
+msgid "Uses the monitor grid and expands it when there are more windows than cells"
+msgstr "Utilise la grille du moniteur et l’agrandit lorsqu’il y a plus de fenêtres que de cellules"
+
+msgid "Automatically organize all movable windows on the focused monitor"
+msgstr "Organiser automatiquement toutes les fenêtres déplaçables sur le moniteur actif"

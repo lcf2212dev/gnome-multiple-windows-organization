@@ -22,6 +22,7 @@ function call(method, params = null) {
 const getState = () => JSON.parse(call('GetState'));
 const move = dir => call('MoveFocused', new GLib.Variant('(s)', [dir]));
 const span = dir => call('SpanFocused', new GLib.Variant('(s)', [dir]));
+const organize = () => call('OrganizeFocusedMonitor');
 const moveToCell = (monitor, c) => call('MoveFocusedToCell',
     new GLib.Variant('(iiiii)', [monitor, c.col, c.row, c.colSpan, c.rowSpan]));
 
@@ -36,6 +37,16 @@ function sleepMs(ms) {
 
 let failures = 0;
 let checks = 0;
+
+function check(label, actual, expected) {
+    checks++;
+    if (actual === expected) {
+        print(`✓ ${label}`);
+        return;
+    }
+    failures++;
+    print(`✗ ${label}\n    esperado ${JSON.stringify(expected)}\n    obtido   ${JSON.stringify(actual)}`);
+}
 
 // Wayland aplica move/resize de forma assíncrona: sempre esperar com polling.
 function expectRect(label, expected, tolerance = 2) {
@@ -160,6 +171,10 @@ expectRect('gap=12 aplicado na célula (0,1)',
 
 settings.set_int('gap', 0);
 Gio.Settings.sync();
+expectState('gap=0 propagado ao shell', s => s.gap === 0);
+
+check('organize monitor via D-Bus', organize(), 'ok:1');
+expectRect('organize monitor → primeira célula do monitor focado', rect0(cell(0, 0)));
 
 print(failures > 0
     ? `\n${failures}/${checks} verificações E2E FALHARAM`

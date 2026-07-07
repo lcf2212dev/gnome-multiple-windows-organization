@@ -115,6 +115,37 @@ export class WindowMover {
         return {x: rect.x, y: rect.y, width: rect.width, height: rect.height};
     }
 
+    _windowsForMonitor(referenceWindow, monitor) {
+        const workspace = referenceWindow.get_workspace?.() ??
+            global.workspace_manager.get_active_workspace();
+        return global.display.get_tab_list(Meta.TabList.NORMAL, workspace)
+            .filter(window => window.get_monitor() === monitor &&
+                this.isTileable(window) &&
+                (!window.showing_on_its_workspace || window.showing_on_its_workspace()))
+            .sort((a, b) => {
+                const ar = this._frameOf(a);
+                const br = this._frameOf(b);
+                return (ar.y - br.y) || (ar.x - br.x) ||
+                    String(a.get_title()).localeCompare(String(b.get_title()));
+            });
+    }
+
+    _placeInCell(window, monitorIndex, grid, cell, remember = true) {
+        if (!this.isTileable(window))
+            return false;
+        if (window.is_maximized())
+            window.unmaximize();
+        const clamped = Grid.clampCell(grid, cell);
+        const workArea = this._workAreaFor(window, monitorIndex);
+        const rect = Grid.cellRect(workArea, grid, clamped, this._config.gap);
+        window.move_resize_frame(true, rect.x, rect.y, rect.width, rect.height);
+        if (remember)
+            this._remember(window, monitorIndex, clamped);
+        else
+            this._forget(window);
+        return true;
+    }
+
     _frameOf(window) {
         const rect = window.get_frame_rect();
         return {x: rect.x, y: rect.y, width: rect.width, height: rect.height};
@@ -148,17 +179,27 @@ export class WindowMover {
     }
 
     moveToCell(window, monitorIndex, cell) {
-        if (!this.isTileable(window))
-            return false;
-        if (window.is_maximized())
-            window.unmaximize();
         const grid = this._config.gridForMonitor(monitorIndex);
-        const clamped = Grid.clampCell(grid, cell);
-        const workArea = this._workAreaFor(window, monitorIndex);
-        const rect = Grid.cellRect(workArea, grid, clamped, this._config.gap);
-        window.move_resize_frame(true, rect.x, rect.y, rect.width, rect.height);
-        this._remember(window, monitorIndex, clamped);
-        return true;
+        return this._placeInCell(window, monitorIndex, grid, cell);
+    }
+
+    organizeMonitor(referenceWindow) {
+        if (!referenceWindow)
+            return 0;
+
+        const monitor = referenceWindow.get_monitor();
+        const windows = this._windowsForMonitor(referenceWindow, monitor);
+        const baseGrid = this._config.gridForMonitor(monitor);
+        const layout = Grid.autoLayoutCells(baseGrid, windows.length);
+        const remember = layout.grid.rows === baseGrid.rows && layout.grid.cols === baseGrid.cols;
+        let moved = 0;
+
+        for (let i = 0; i < windows.length; i++) {
+            if (this._placeInCell(windows[i], monitor, layout.grid, layout.cells[i], remember))
+                moved++;
+        }
+
+        return moved;
     }
 
     moveDirection(window, dir) {

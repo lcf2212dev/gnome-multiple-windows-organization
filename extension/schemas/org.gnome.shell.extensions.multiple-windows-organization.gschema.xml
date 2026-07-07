@@ -95,5 +95,10 @@
       <summary>Open the grid popup</summary>
     </key>
 
+    <key name="organize-monitor" type="as">
+      <default>['&lt;Super&gt;&lt;Control&gt;g']</default>
+      <summary>Automatically organize all movable windows on the focused monitor</summary>
+    </key>
+
   </schema>
 </schemalist>

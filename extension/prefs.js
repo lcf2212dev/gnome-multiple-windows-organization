@@ -21,7 +21,9 @@ export default class MwoPrefs extends ExtensionPreferences {
         this._settings = settings;
         this._window = window;
         this._pages = [];
-        window.set_default_size(680, 760);
+        window.set_title(this._('Multiple Windows Organization'));
+        window.set_default_size(760, 720);
+        window.set_search_enabled?.(true);
         this._rebuildPreferencesWindow(window, settings);
     }
 
@@ -59,6 +61,49 @@ export default class MwoPrefs extends ExtensionPreferences {
         settings.set_string('monitor-grids', JSON.stringify(grids));
     }
 
+    _gridForConnector(settings, connector) {
+        const grids = this._readGrids(settings);
+        return {
+            rows: grids[connector]?.rows ?? settings.get_int('default-rows'),
+            cols: grids[connector]?.cols ?? settings.get_int('default-cols'),
+        };
+    }
+
+    _gridLabel(settings, connector = null) {
+        const grid = connector
+            ? this._gridForConnector(settings, connector)
+            : {
+                rows: settings.get_int('default-rows'),
+                cols: settings.get_int('default-cols'),
+            };
+        return `${grid.cols}×${grid.rows}`;
+    }
+
+    _hasCustomGrid(settings, connector) {
+        return Object.prototype.hasOwnProperty.call(this._readGrids(settings), connector);
+    }
+
+    _rowIcon(iconName) {
+        const icon = new Gtk.Image({
+            icon_name: iconName,
+            valign: Gtk.Align.CENTER,
+        });
+        icon.add_css_class('dim-label');
+        return icon;
+    }
+
+    _layoutBadge(label) {
+        const badge = new Gtk.Label({
+            label,
+            valign: Gtk.Align.CENTER,
+            xalign: 0.5,
+        });
+        badge.add_css_class('caption');
+        badge.add_css_class('dim-label');
+        badge.add_css_class('numeric');
+        return badge;
+    }
+
     // ---- Monitors page -----------------------------------------------------
 
     _buildMonitorsPage(settings) {
@@ -73,6 +118,14 @@ export default class MwoPrefs extends ExtensionPreferences {
         });
         page.add(group);
 
+        const defaultRow = new Adw.ActionRow({
+            title: this._('Default grid'),
+            subtitle: this._('Used by monitors without their own setting (1×2 mimics native GNOME tiling)'),
+        });
+        defaultRow.add_prefix(this._rowIcon('view-grid-symbolic'));
+        defaultRow.add_suffix(this._layoutBadge(this._gridLabel(settings)));
+        group.add(defaultRow);
+
         const connected = [];
         const monitors = Gdk.Display.get_default().get_monitors();
         for (let i = 0; i < monitors.get_n_items(); i++) {
@@ -85,8 +138,31 @@ export default class MwoPrefs extends ExtensionPreferences {
                 subtitle: `${connector} — ${geometry.width}×${geometry.height}`,
                 expanded: true,
             });
-            row.add_row(this._gridSpinRow(settings, connector, 'cols', this._('Columns')));
-            row.add_row(this._gridSpinRow(settings, connector, 'rows', this._('Rows')));
+            const badge = this._layoutBadge(this._gridLabel(settings, connector));
+            const reset = new Gtk.Button({
+                icon_name: 'edit-clear-symbolic',
+                tooltip_text: this._('Remove setting'),
+                valign: Gtk.Align.CENTER,
+            });
+            reset.add_css_class('flat');
+            reset.add_css_class('circular');
+            reset.set_sensitive(this._hasCustomGrid(settings, connector));
+            reset.connect('clicked', () => {
+                const current = this._readGrids(settings);
+                delete current[connector];
+                this._writeGrids(settings, current);
+                this._rebuildPreferencesWindow(this._window, settings, PAGE_NAMES.MONITORS);
+            });
+            const refresh = () => {
+                badge.set_label(this._gridLabel(settings, connector));
+                reset.set_sensitive(this._hasCustomGrid(settings, connector));
+            };
+
+            row.add_prefix(this._rowIcon('video-display-symbolic'));
+            row.add_suffix(badge);
+            row.add_action(reset);
+            row.add_row(this._gridSpinRow(settings, connector, 'cols', this._('Columns'), refresh));
+            row.add_row(this._gridSpinRow(settings, connector, 'rows', this._('Rows'), refresh));
             group.add(row);
         }
 
@@ -105,6 +181,7 @@ export default class MwoPrefs extends ExtensionPreferences {
                     title: connector,
                     subtitle: this._('disconnected — %s×%s').format(entry.cols ?? '?', entry.rows ?? '?'),
                 });
+                row.add_prefix(this._rowIcon('video-display-symbolic'));
                 const remove = new Gtk.Button({
                     icon_name: 'user-trash-symbolic',
                     valign: Gtk.Align.CENTER,
@@ -124,7 +201,7 @@ export default class MwoPrefs extends ExtensionPreferences {
         return page;
     }
 
-    _gridSpinRow(settings, connector, key, title) {
+    _gridSpinRow(settings, connector, key, title, onChanged = null) {
         const grids = this._readGrids(settings);
         const initial = grids[connector]?.[key] ??
             settings.get_int(key === 'rows' ? 'default-rows' : 'default-cols');
@@ -143,6 +220,7 @@ export default class MwoPrefs extends ExtensionPreferences {
             entry[key] = Math.round(row.get_value());
             current[connector] = entry;
             this._writeGrids(settings, current);
+            onChanged?.();
         });
         return row;
     }
@@ -156,30 +234,32 @@ export default class MwoPrefs extends ExtensionPreferences {
             icon_name: 'preferences-system-symbolic',
         });
 
-        page.add(this._buildInterfaceGroup(settings));
-
         const gridGroup = new Adw.PreferencesGroup({
             title: this._('Default grid'),
             description: this._('Used by monitors without their own setting (1×2 mimics native GNOME tiling)'),
         });
-        gridGroup.add(this._settingsSpinRow(settings, 'default-cols', this._('Columns'), 1, 8));
-        gridGroup.add(this._settingsSpinRow(settings, 'default-rows', this._('Rows'), 1, 8));
+        gridGroup.add(this._settingsSpinRow(settings, 'default-cols', this._('Columns'), 1, 8,
+            'view-grid-symbolic'));
+        gridGroup.add(this._settingsSpinRow(settings, 'default-rows', this._('Rows'), 1, 8,
+            'view-grid-symbolic'));
         page.add(gridGroup);
 
         const behaviourGroup = new Adw.PreferencesGroup({title: this._('Behavior')});
         behaviourGroup.add(this._settingsSpinRow(settings, 'gap',
-            this._('Gap between windows (px)'), 0, 64));
+            this._('Gap between windows (px)'), 0, 64, 'preferences-system-symbolic'));
         const dragRow = new Adw.SwitchRow({
             title: this._('Snap while dragging'),
             subtitle: this._('Screen edges become grid zones (top maximizes); hold Ctrl while dragging to show the full grid'),
         });
+        dragRow.add_prefix(this._rowIcon('input-mouse-symbolic'));
         settings.bind('enable-drag-zones', dragRow, 'active', Gio.SettingsBindFlags.DEFAULT);
         behaviourGroup.add(dragRow);
         const edgeRow = this._settingsSpinRow(settings, 'edge-threshold',
-            this._('Edge zone thickness (px)'), 8, 256);
+            this._('Edge zone thickness (px)'), 8, 256, 'preferences-system-symbolic');
         settings.bind('enable-drag-zones', edgeRow, 'sensitive', Gio.SettingsBindFlags.GET);
         behaviourGroup.add(edgeRow);
         page.add(behaviourGroup);
+        page.add(this._buildInterfaceGroup(settings));
 
         return page;
     }
@@ -195,6 +275,7 @@ export default class MwoPrefs extends ExtensionPreferences {
             model: Gtk.StringList.new(I18n.languageLabels(message => this._(message))),
             selected: I18n.languageIndex(settings),
         });
+        languageRow.add_prefix(this._rowIcon('preferences-desktop-locale-symbolic'));
         languageRow.connect('notify::selected', () => {
             const selected = I18n.languageCodeAt(languageRow.get_selected());
             if (I18n.configuredLanguageCode(settings) === selected)
@@ -207,7 +288,7 @@ export default class MwoPrefs extends ExtensionPreferences {
         return group;
     }
 
-    _settingsSpinRow(settings, key, title, lower, upper) {
+    _settingsSpinRow(settings, key, title, lower, upper, iconName = null) {
         const row = new Adw.SpinRow({
             title,
             adjustment: new Gtk.Adjustment({
@@ -215,6 +296,8 @@ export default class MwoPrefs extends ExtensionPreferences {
                 value: settings.get_int(key),
             }),
         });
+        if (iconName)
+            row.add_prefix(this._rowIcon(iconName));
         row.connect('notify::value', () => {
             const value = Math.round(row.get_value());
             if (settings.get_int(key) !== value)
@@ -234,6 +317,7 @@ export default class MwoPrefs extends ExtensionPreferences {
 
         const shortcutRow = (title, accelerator, subtitle = null) => {
             const row = new Adw.ActionRow({title, subtitle});
+            row.add_prefix(this._rowIcon('input-keyboard-symbolic'));
             row.add_suffix(new Gtk.ShortcutLabel({
                 accelerator: accelerator || '',
                 disabled_text: this._('disabled'),
@@ -241,8 +325,8 @@ export default class MwoPrefs extends ExtensionPreferences {
             }));
             return row;
         };
-        const fromSettings = (title, key) =>
-            shortcutRow(title, settings.get_strv(key)[0] ?? '');
+        const fromSettings = (title, key, subtitle = null) =>
+            shortcutRow(title, settings.get_strv(key)[0] ?? '', subtitle);
 
         const moveGroup = new Adw.PreferencesGroup({
             title: this._('Move in grid'),
@@ -264,12 +348,22 @@ export default class MwoPrefs extends ExtensionPreferences {
         spanGroup.add(fromSettings(this._('Expand down'), 'span-down'));
         page.add(spanGroup);
 
+        const autoGroup = new Adw.PreferencesGroup({
+            title: this._('Automatic layout'),
+            description: this._('Tile every movable window on the focused monitor'),
+        });
+        autoGroup.add(fromSettings(this._('Organize monitor'), 'organize-monitor',
+            this._('Uses the monitor grid and expands it when there are more windows than cells')));
+        page.add(autoGroup);
+
         const popupGroup = new Adw.PreferencesGroup({title: this._('Grid popup')});
         popupGroup.add(fromSettings(this._('Open popup'), 'show-popup'));
-        popupGroup.add(new Adw.ActionRow({
+        const customizeRow = new Adw.ActionRow({
             title: this._('Customize shortcuts'),
             subtitle: this._('Edit keys under /org/gnome/shell/extensions/multiple-windows-organization/ with dconf-editor'),
-        }));
+        });
+        customizeRow.add_prefix(this._rowIcon('document-edit-symbolic'));
+        popupGroup.add(customizeRow);
         page.add(popupGroup);
 
         return page;

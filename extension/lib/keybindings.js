@@ -26,6 +26,11 @@ export class GridKeybindings {
             if (target)
                 this._mover.spanDirection(target, dir);
         };
+        const organize = (_display, window) => {
+            const target = window ?? global.display.focus_window;
+            if (target)
+                this._mover.organizeMonitor(target);
+        };
 
         Main.wm.setCustomKeybindingHandler('toggle-tiled-left', Shell.ActionMode.NORMAL, move('left'));
         Main.wm.setCustomKeybindingHandler('toggle-tiled-right', Shell.ActionMode.NORMAL, move('right'));
@@ -43,6 +48,7 @@ export class GridKeybindings {
         for (const dir of ['left', 'right', 'up', 'down'])
             add(`span-${dir}`, span(dir));
         add('show-popup', () => this._popup?.open());
+        add('organize-monitor', organize);
     }
 
     disable() {

@@ -197,3 +197,18 @@ msgstr "界面语言"
 msgid "Language used by the preferences window and extension UI. Use “system” to follow the GNOME/system language."
 msgstr "首选项窗口和扩展界面使用的语言。使用“system”跟随 GNOME/系统语言。"
 
+
+msgid "Automatic layout"
+msgstr "自动布局"
+
+msgid "Tile every movable window on the focused monitor"
+msgstr "平铺当前聚焦显示器上的所有可移动窗口"
+
+msgid "Organize monitor"
+msgstr "整理显示器"
+
+msgid "Uses the monitor grid and expands it when there are more windows than cells"
+msgstr "使用显示器网格；当窗口多于单元格时会扩展网格"
+
+msgid "Automatically organize all movable windows on the focused monitor"
+msgstr "自动整理当前聚焦显示器上的所有可移动窗口"
