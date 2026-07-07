@@ -38,10 +38,10 @@ window, available from the application menu as **Multiple Windows Organization**
 ```
 
 > **First install:** GNOME Shell on Wayland only scans new extensions at login.
-> Log out/in, then run
-> `gnome-extensions enable multiple-windows-organization@lcf2212dev`
-> or enable it from the Extensions app. After that, enable/disable takes effect
-> immediately.
+> Log out/in, then open the Extensions app and enable
+> **Multiple Windows Organization**. If you prefer the terminal, run
+> `gnome-extensions enable multiple-windows-organization@lcf2212dev`.
+> After that, enable/disable takes effect immediately.
 
 ## Usage
 
@@ -114,7 +114,8 @@ applies it, and `Esc` cancels.
 
 ## Configuration — the app
 
-Open **Multiple Windows Organization** from the application menu, or run:
+The easiest way is to open **Multiple Windows Organization** from the
+application menu. The terminal fallback is:
 
 ```bash
 gnome-extensions prefs multiple-windows-organization@lcf2212dev

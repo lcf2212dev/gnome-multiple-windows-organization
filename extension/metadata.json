@@ -5,5 +5,5 @@
   "shell-version": ["50"],
   "settings-schema": "org.gnome.shell.extensions.multiple-windows-organization",
   "gettext-domain": "multiple-windows-organization",
-  "url": "https://github.com/lcf2212dev/multiple-windows-organization"
+  "url": "https://github.com/lcf2212dev/gnome-multiple-windows-organization"
 }
